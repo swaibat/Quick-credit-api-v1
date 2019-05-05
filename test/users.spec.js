@@ -2,7 +2,7 @@ import express from 'express';
 import request from 'supertest';
 import should from 'should';
 import usersRoute from '../api/routes/users'
-import {testdata, testlength} from '../api/models/dummyUsers';
+import {users,testData} from '../api/models/dummyUsers';
 
 const app = express();
 app.use(express.json());
@@ -13,34 +13,47 @@ app.use('/api/v1/users', usersRoute);
     it('check requires feilds', function(done) {
       request(app)
         .post('/api/v1/users/auth/signup')
-        .send({email: "om"})
+        .send(testData[0])
         .set('Accept', 'application/json')
-        .expect({"message": "\"firstName\" is required"})
-        .expect(400,done);
+        .end(function (err, res) {
+          res.status.should.equal(400);
+          res.body.message.should.equal("\"firstName\" is required");
+          done();
+        });
     });
     it('check input length', function(done) {
       request(app)
         .post('/api/v1/users/auth/signup')
-        .send(testlength)
+        .send(testData[1])
         .set('Accept', 'application/json')
-        .expect({"message": "\"email\" length must be at least 3 characters long"})
-        .expect(400,done);
+        .end(function (err, res) {
+          res.status.should.equal(400);
+          res.body.message.should.be.eql("\"email\" length must be at least 3 characters long")
+          done();
+        });
     });
 
-    it('check if user is posted', function(done) {
+    it('check for username existance', function(done) {
       request(app)
         .post('/api/v1/users/auth/signup')
-        .send(testdata)
+        .send(testData[3])
         .set('Accept', 'application/json')
-        .expect(201,done);
+        .end(function (err, res) {
+          res.status.should.equal(409);
+          res.body.message.should.equal(`user ${testData[3].email} already exists `)
+          done();
+        });
     });
 
-    it('chek if user exists', function(done) {
+    it('chek if user has been posted', function(done) {
       request(app)
         .post('/api/v1/users/auth/signup')
-        .send(testdata)
+        .send(testData[4])
         .set('Accept', 'application/json')
-        .expect(409,done);
+        .end(function (err, res) {
+          res.status.should.equal(201);
+          done();
+        });
     });
 
   });
@@ -56,12 +69,26 @@ app.use('/api/v1/users', usersRoute);
         .set('Accept', 'application/json')
         .end(function (err, res) {
           res.status.should.equal(200);
-          res.body.data.should.have.property('email');
-          res.body.data.should.have.property('token');
+          res.body.should.have.property('email');
+          res.body.should.have.property('token');
           done();
         });
     });
 
+    it('check if username and password match', function(done) {
+      request(app)
+        .post('/api/v1/users/auth/signin')
+        .send({
+          "email": "bob@gmail.com",
+          "password": "anderso"
+        })
+        .set('Accept', 'application/json')
+        .end(function (err, res) {
+          res.status.should.equal(401);
+          res.body.message.should.equal('Auth failed,invalid details')
+          done();
+        });
+    });
     it('check for wrong details', function(done) {
       request(app)
         .post('/api/v1/users/auth/signin')

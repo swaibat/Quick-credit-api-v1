@@ -3,3 +3,5 @@ package-lock.json
 .nyc_output
 .reify-cache
 .vscode
+.coveralls.yml
+coverage

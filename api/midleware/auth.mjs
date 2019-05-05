@@ -50,17 +50,25 @@ export function postData(req, res, next) {
 }
 
 // sigin  midlaware
-export function postSignin(req, res, next){
+export function postSignin(req, res){
   // token const
   const token = jwt.sign({ email: req.body.email}, appSecreteKey, { expiresIn: '1hr' });
   // check for the details existance
   const user = users.find(u => u.email === req.body.email);
-  if (user.password !== req.body.password) {
+  if (!user || user.password !== req.body.password ) {
     res.status(401).send({ message: 'Auth failed,invalid details' });
     return
   }
-    user.token = token;
-    res.status(200).send(user);
-
-  next()
+  user.token = token;
+  res.status(200).send(user)
 };
+// for(var i = 0; i < users.length; i++) {
+//   // check is user input matches username and password of a current index of the objPeople array
+//   if(users[i].email === req.body.email && users[i].password === req.body.password) {
+//       users[i].token = token;
+//       res.status(200).send(users[i]);
+//     return
+//   }
+//   // res.send(users[i].email + " is logged in!!!")
+// }
+// res.send(users[i].email + " is logged in!!!")

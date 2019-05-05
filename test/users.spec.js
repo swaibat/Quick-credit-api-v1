@@ -89,17 +89,4 @@ app.use('/api/v1/users', usersRoute);
           done();
         });
     });
-    it('check for wrong details', function(done) {
-      request(app)
-        .post('/api/v1/users/auth/signin')
-        .send({
-          "email": "b@gmail.com",
-          "password": "anderson"
-        })
-        .set('Accept', 'application/json')
-        .end(function (err, res) {
-          res.status.should.equal(500);
-          done();
-        });
-    });
   });

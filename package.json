@@ -1,19 +1,49 @@
 {
-  "name": "quick-credit-api-v1",
+  "name": "quick-credit-restful-api",
   "version": "1.0.0",
-  "description": "Quick Credit is an online lending platform that provides short term soft loans to individuals.This helps solve problems of financial inclusion as away to alleviate poverty and empower low income earners.",
+  "description": "Quick Credit is anonline lending platform that provides short term soft loans to individuals.This helps solve problems of financial inclusion as away to alleviate poverty and empower low income earners.",
   "main": "index.js",
+  "nyc": {
+    "require": [
+      "reify"
+    ],
+    "extension": [
+      ".mjs"
+    ]
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --experimental-modules index.mjs",
+    "test": "nyc mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/swaibat/Quick-credit-api-v1.git"
+    "url": "git+https://github.com/swaibat/Quick-Credit-restful-api.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/swaibat/Quick-credit-api-v1/issues"
+    "url": "https://github.com/swaibat/Quick-Credit-restful-api/issues"
   },
-  "homepage": "https://github.com/swaibat/Quick-credit-api-v1#readme"
+  "homepage": "https://github.com/swaibat/Quick-Credit-restful-api#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
+    "query-string": "^6.5.0",
+    "short-uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.0",
+    "reify": "0.17.3",
+    "supertest": "^4.0.2"
+  },
+  "directories": {
+    "test": "test"
+  }
 }

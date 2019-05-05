@@ -13,8 +13,7 @@
   },
   "scripts": {
     "start": "nodemon --experimental-modules index.mjs",
-    "test": "nyc mocha",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "test": "nyc mocha"
   },
   "repository": {
     "type": "git",

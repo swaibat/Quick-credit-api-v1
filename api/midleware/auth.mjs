@@ -24,9 +24,9 @@ export function inputValidator(req, res, next) {
 }
 
 export function checkUserExists(req, res, next) {
-  const user = users.find(u => u.data.email === req.body.email);
+  const user = users.find(u => u.email === req.body.email);
   if (user) {
-    res.status(409).send({ message: `user ${user.data.email} already exists ` });
+    res.status(409).send({ message: `user ${user.email} already exists ` });
     return;
   }
   next();
@@ -36,8 +36,6 @@ export function postData(req, res, next) {
   // token const
   const token = jwt.sign({ email: req.body.email }, appSecreteKey, { expiresIn: '1hr' });
   const user = {
-    status: 200,
-    data: {
       id: short.generate(),
       token,
       email: req.body.email,
@@ -46,25 +44,31 @@ export function postData(req, res, next) {
       password: req.body.password,
       adress: req.body.adress,
       isAdmin: false,
-    },
   };
   users.push(user);
   res.status(201).send(user);
 }
 
 // sigin  midlaware
-export function postSignin(req, res, next){
+export function postSignin(req, res){
   // token const
-  const token = jwt.sign({ email: req.body.email, password: req.body.password }, appSecreteKey, { expiresIn: '1hr' });
+  const token = jwt.sign({ email: req.body.email}, appSecreteKey, { expiresIn: '1hr' });
   // check for the details existance
-  const user = users.find(u => u.data.email === req.body.email);
-  if (user.data.password !== req.body.password) {
+  const user = users.find(u => u.email === req.body.email);
+  if (!user || user.password !== req.body.password ) {
     res.status(401).send({ message: 'Auth failed,invalid details' });
     return
   }
-    user.status = 200;
-    user.data.token = token;
-    res.status(200).send(user);
-
-  next()
+  user.token = token;
+  res.status(200).send(user)
 };
+// for(var i = 0; i < users.length; i++) {
+//   // check is user input matches username and password of a current index of the objPeople array
+//   if(users[i].email === req.body.email && users[i].password === req.body.password) {
+//       users[i].token = token;
+//       res.status(200).send(users[i]);
+//     return
+//   }
+//   // res.send(users[i].email + " is logged in!!!")
+// }
+// res.send(users[i].email + " is logged in!!!")

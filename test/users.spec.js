@@ -1,5 +1,6 @@
 import express from 'express';
 import request from 'supertest';
+import should from 'should';
 import usersRoute from '../api/routes/users'
 import {testdata, testlength} from '../api/models/dummyUsers';
 
@@ -42,4 +43,36 @@ app.use('/api/v1/users', usersRoute);
         .expect(409,done);
     });
 
+  });
+
+  describe('User Signin', function() {
+    it('check if user data exists', function(done) {
+      request(app)
+        .post('/api/v1/users/auth/signin')
+        .send({
+          "email": "bob@gmail.com",
+          "password": "anderson"
+        })
+        .set('Accept', 'application/json')
+        .end(function (err, res) {
+          res.status.should.equal(200);
+          res.body.data.should.have.property('email');
+          res.body.data.should.have.property('token');
+          done();
+        });
+    });
+
+    it('check for wrong details', function(done) {
+      request(app)
+        .post('/api/v1/users/auth/signin')
+        .send({
+          "email": "b@gmail.com",
+          "password": "anderson"
+        })
+        .set('Accept', 'application/json')
+        .end(function (err, res) {
+          res.status.should.equal(500);
+          done();
+        });
+    });
   });

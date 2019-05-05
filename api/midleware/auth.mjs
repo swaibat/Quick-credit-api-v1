@@ -1,4 +1,4 @@
-import joi from 'joi';
+import joi from '@hapi/joi';
 import jwt from 'jsonwebtoken';
 import short from 'short-uuid';
 import { users } from '../models/dummyUsers.mjs';
@@ -51,3 +51,20 @@ export function postData(req, res, next) {
   users.push(user);
   res.status(201).send(user);
 }
+
+// sigin  midlaware
+export function postSignin(req, res, next){
+  // token const
+  const token = jwt.sign({ email: req.body.email, password: req.body.password }, appSecreteKey, { expiresIn: '1hr' });
+  // check for the details existance
+  const user = users.find(u => u.data.email === req.body.email);
+  if (user.data.password !== req.body.password) {
+    res.status(401).send({ message: 'Auth failed,invalid details' });
+    return
+  }
+    user.status = 200;
+    user.data.token = token;
+    res.status(200).send(user);
+
+  next()
+};

@@ -8,13 +8,13 @@ app.use('/api/v1/users', usersRoute);
 
 // if the page is not found
 app.use((req, res, next) => {
-  const error = new Error('Bad Request');
-  error.status = 400;
+  const error = new Error('Not found');
+  error.status = 404;
   next(error);
 });
 
 app.use((error, req, res, next) => {
-  res.status(error.status || 500).send({ error: 400, message: error.message  });
+  res.status(error.status || 500).send({ error: error.status || 500, message: error.message  });
   next()
 });
 

@@ -13,7 +13,8 @@
   },
   "scripts": {
     "start": "nodemon --experimental-modules index.mjs",
-    "test": "nyc mocha"
+    "test": "nyc mocha",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   },
   "homepage": "https://github.com/swaibat/Quick-Credit-restful-api#readme",
   "dependencies": {
+    "@hapi/joi": "^15.0.1",
     "express": "^4.16.4",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
@@ -35,12 +37,14 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "coveralls": "^3.0.3",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
     "mocha": "^6.1.4",
     "nyc": "^14.1.0",
     "reify": "0.17.3",
+    "should": "^13.2.3",
     "supertest": "^4.0.2"
   },
   "directories": {

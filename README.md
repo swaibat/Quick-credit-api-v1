@@ -6,3 +6,4 @@ Quick Credit is an online lending platform that provides short term soft loans t
 [![CodeFactor](https://www.codefactor.io/repository/github/swaibat/quick-credit-api-v1/badge)](https://www.codefactor.io/repository/github/swaibat/quick-credit-api-v1)
 [![dependencies Status](https://david-dm.org/swaibat/Quick-credit-api-v1/status.svg)](https://david-dm.org/swaibat/Quick-credit-api-v1)
 [![devDependencies Status](https://david-dm.org/swaibat/Quick-credit-api-v1/dev-status.svg)](https://david-dm.org/swaibat/Quick-credit-api-v1?type=dev)
+[![Maintainability](https://api.codeclimate.com/v1/badges/91e8927e9c5d8ba586bf/maintainability)](https://codeclimate.com/github/swaibat/Quick-credit-api-v1/maintainability)

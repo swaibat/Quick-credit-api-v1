@@ -83,7 +83,17 @@ describe('Accessible by admin Only', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
-        // res.body.message.should.equal('No loan repayment history found');
+        done();
+      });
+  });
+  it('gets specific loan by id', (done) => {
+    request(app)
+      .get('/api/v1/loans/QK-588A979LL3M')
+      .set('Authorization', `Bearer ${token}`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(200);
+        res.body.should.have.property('amount').which.is.a.Number();
         done();
       });
   });

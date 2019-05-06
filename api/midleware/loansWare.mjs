@@ -48,3 +48,10 @@ export function viewLoans(req, res, next) {
   res.status(200).send(loans);
   next();
 }
+
+// View a specific loan
+export function viewSpecific(req, res) {
+  const loan = loans.find(a => a.id === req.params.loanId);
+  loan.createdOn = timeago.format(loan.createdOn);
+  res.status(200).send(loan)
+}

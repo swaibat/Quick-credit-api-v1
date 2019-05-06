@@ -72,3 +72,13 @@ export const testData = [
     password: "Kanyanyama01"
   }
 ];
+export let admin = {
+   id: 'QK-588A979LL3M',
+    email: 'job@gmail.com',
+    firstName: 'job',
+    lastName: 'ogins',
+    password: 'december',
+    adress: 'kigali',
+    status: 'un-verified',
+    isAdmin: true
+}

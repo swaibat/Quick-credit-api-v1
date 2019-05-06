@@ -2,14 +2,14 @@ import express from 'express';
 import request from 'supertest';
 import should from 'should';
 import usersRoute from '../api/routes/users'
-import {users,testData} from '../api/models/dummyUsers';
+import {users,testData,token} from '../api/models/dummyUsers';
 
 const app = express();
 app.use(express.json());
 
 app.use('/api/v1/users', usersRoute);
 
-  describe('Test Signup route', function() {
+  describe('Tests Signup route', function() {
     it('check requires feilds', function(done) {
       request(app)
         .post('/api/v1/users/auth/signup')
@@ -21,7 +21,7 @@ app.use('/api/v1/users', usersRoute);
           done();
         });
     });
-    it('check input length', function(done) {
+    it('checks input length', function(done) {
       request(app)
         .post('/api/v1/users/auth/signup')
         .send(testData[1])
@@ -33,7 +33,7 @@ app.use('/api/v1/users', usersRoute);
         });
     });
 
-    it('check for username existance', function(done) {
+    it('checks for username existance', function(done) {
       request(app)
         .post('/api/v1/users/auth/signup')
         .send(testData[3])
@@ -45,7 +45,7 @@ app.use('/api/v1/users', usersRoute);
         });
     });
 
-    it('chek if user has been posted', function(done) {
+    it('checks if user has been posted', function(done) {
       request(app)
         .post('/api/v1/users/auth/signup')
         .send(testData[4])
@@ -58,7 +58,7 @@ app.use('/api/v1/users', usersRoute);
 
   });
 
-  describe('User Signin', function() {
+  describe('Users Signin', function() {
     it('check if user data exists', function(done) {
       request(app)
         .post('/api/v1/users/auth/signin')
@@ -75,7 +75,7 @@ app.use('/api/v1/users', usersRoute);
         });
     });
 
-    it('check if username and password match', function(done) {
+    it('checks if username and password match', function(done) {
       request(app)
         .post('/api/v1/users/auth/signin')
         .send({
@@ -89,4 +89,73 @@ app.use('/api/v1/users', usersRoute);
           done();
         });
     });
+  });
+
+  describe('verify User', function() {
+    var token = '';
+
+  before(function(done) {
+    request(app)
+      .post('/api/v1/users/auth/signin')
+      .send({
+        "email": "job@gmail.com",
+        "password": "december"
+      })
+      .end(function(err, res) {
+        var result = JSON.parse(res.text);
+        token = result.token;
+        done();
+      });
+  });
+    it('checks user verification', function(done) {
+      request(app)
+        .patch('/api/v1/users/andy@gmail.com/verify')
+       .set('Authorization', 'Bearer ' + token)
+        .set('Accept', 'application/json')
+        .end(function (err, res) {
+            res.status.should.equal(200);
+            res.body.should.have.property('status','verified')
+        done()
+        })
+    });
+    it('checks user to verify is not found', function(done) {
+      request(app)
+        .patch('/api/v1/users/and@gmail.com/verify')
+       .set('Authorization', 'Bearer ' + token)
+        .set('Accept', 'application/json')
+        .end(function (err, res) {
+            res.status.should.equal(404);
+            res.body.message.should.equal(`user with and@gmail.com not Found`)
+        done()
+        })
+    });
+  });
+
+  describe('verify User', function() {
+    var token = '';
+
+  before(function(done) {
+    request(app)
+      .post('/api/v1/users/auth/signin')
+      .send({
+        "email": "andy@gmail.com",
+        "password": "january"
+      })
+      .end(function(err, res) {
+        var result = JSON.parse(res.text);
+        token = result.token;
+        done();
+      });
+  });
+    it('check user verification', function(done) {
+      request(app)
+        .patch('/api/v1/users/andy@gmail.com/verify')
+       .set('Authorization', 'Bearer ' + token)
+        .set('Accept', 'application/json')
+        .end(function (err, res) {
+            res.status.should.equal(403);
+            res.body.message.should.equal('Forbidden')
+        done()
+        })
+    });1
   });

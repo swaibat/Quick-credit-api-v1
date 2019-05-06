@@ -1,5 +1,6 @@
 import short from 'short-uuid';
-import { loans } from '../models/dummyloans';
+import timeago from 'timeago.js';
+import { loans, repayments } from '../models/dummyloans';
 
 // apply for loan
 export function appliedCheck(req, res, next) {
@@ -27,4 +28,17 @@ export function postLoan(req, res) {
   };
   loans.push(loan);
   res.status(201).send(loan);
+}
+
+// View loan repayment history
+export function LoanRepayments(req, res) {
+  const loanHistory = repayments.filter(a => a.id === req.params.loanId);
+  if (!loanHistory || loanHistory.length < 1) {
+    res.status(404).send({ message: 'No loan repayment history found' });
+    return;
+  }
+  loanHistory.forEach((loan)=>{
+    loan.createdOn = timeago.format(loan.createdOn)
+  });
+  res.send(loanHistory);
 }

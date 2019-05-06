@@ -33,3 +33,28 @@ app.use('/api/v1/loans', loansRoute);
         })
     });
 });
+
+describe('Test Loans Get methods', function() {
+  it('check if No Loans repayment found', function(done) {
+    request(app)
+      .get('/api/v1/loans/QK-99588A9795L3/repayments')
+      .set('Accept', 'application/json')
+      .end(function (err, res) {
+          res.status.should.equal(404);
+          res.body.message.should.equal('No loan repayment history found');
+      done()
+      })
+  });
+  it('check if repayment history is sent ', function(done) {
+    request(app)
+      .get('/api/v1/loans/QK-588A979LL3M/repayments')
+      .set('Accept', 'application/json')
+      .end(function (err, res) {
+          res.status.should.equal(200);
+          res.body[0].should.have.property('amount').which.is.a.Number()
+          res.body[0].should.have.property('monthlyInstallment').which.is.a.Number()
+
+      done()
+      })
+  });
+});

@@ -62,13 +62,3 @@ export function postSignin(req, res){
   user.token = token;
   res.status(200).send(user)
 };
-// for(var i = 0; i < users.length; i++) {
-//   // check is user input matches username and password of a current index of the objPeople array
-//   if(users[i].email === req.body.email && users[i].password === req.body.password) {
-//       users[i].token = token;
-//       res.status(200).send(users[i]);
-//     return
-//   }
-//   // res.send(users[i].email + " is logged in!!!")
-// }
-// res.send(users[i].email + " is logged in!!!")

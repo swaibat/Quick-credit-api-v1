@@ -83,45 +83,45 @@ export const repayments = [
     id: 'QK-588A979LV3M',
     createdOn: 1556793783791,
     monthlyInstallment: 10.6,
-    amount: 300
+    amount: 300,
   },
 
   {
     id: 'QK-588A9C9LL3M',
     createdOn: 1556793783791,
     monthlyInstallment: 10.6,
-    amount: 300
+    amount: 300,
   },
 
   {
     id: 'QK-588A979LL3M',
     createdOn: 1556793783791,
     monthlyInstallment: 10.6,
-    amount: 300
+    amount: 300,
   },
 
   {
     id: 'QK-588A979LL3M',
     createdOn: 1473245023718,
     monthlyInstallment: 10.6,
-    amount: 300
+    amount: 300,
   },
   {
     id: 'QK-588A979LL3M',
     createdOn: 1556791783791,
     monthlyInstallment: 10.6,
-    amount: 300
+    amount: 300,
   },
   {
     id: 'QK-588A979LBL3M',
     createdOn: 1556793783791,
     monthlyInstallment: 10.6,
-    amount: 300
+    amount: 300,
   },
   {
     id: 'QK-588A979LLK3M',
     createdOn: 1556793783791,
     monthlyInstallment: 10.6,
-    amount: 300
+    amount: 300,
   },
 ];

@@ -58,27 +58,27 @@ export const testData = [
     isAdmin: false,
   },
   {
-    email: "job@gmail.com",
-    firstName: "job",
-    lastName: "ogins",
-    adress: "kigali",
-    password: "Kanyanyama01"
-  },
-  {
-    email: "aina@gmail.com",
-    firstName: "job",
-    lastName: "ogins",
-    adress: "kigali",
-    password: "Kanyanyama01"
-  }
-];
-export let admin = {
-   id: 'QK-588A979LL3M',
     email: 'job@gmail.com',
     firstName: 'job',
     lastName: 'ogins',
-    password: 'december',
     adress: 'kigali',
-    status: 'un-verified',
-    isAdmin: true
-}
+    password: 'Kanyanyama01',
+  },
+  {
+    email: 'aina@gmail.com',
+    firstName: 'job',
+    lastName: 'ogins',
+    adress: 'kigali',
+    password: 'Kanyanyama01',
+  },
+];
+export const admin = {
+  id: 'QK-588A979LL3M',
+  email: 'job@gmail.com',
+  firstName: 'job',
+  lastName: 'ogins',
+  password: 'december',
+  adress: 'kigali',
+  status: 'un-verified',
+  isAdmin: true,
+};

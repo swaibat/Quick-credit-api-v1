@@ -42,3 +42,9 @@ export function LoanRepayments(req, res) {
   });
   res.send(loanHistory);
 }
+
+// View loan repayment history
+export function viewLoans(req, res, next) {
+  res.status(200).send(loans);
+  next();
+}

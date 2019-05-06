@@ -157,5 +157,5 @@ app.use('/api/v1/users', usersRoute);
             res.body.message.should.equal('Forbidden')
         done()
         })
-    });1
+    });
   });

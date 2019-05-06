@@ -1,6 +1,6 @@
 {
-  "name": "quick-credit-restful-api",
-  "version": "1.0.0",
+  "name": "quick-credit-api",
+  "version": "1.0.1",
   "description": "Quick Credit is anonline lending platform that provides short term soft loans to individuals.This helps solve problems of financial inclusion as away to alleviate poverty and empower low income earners.",
   "main": "index.js",
   "nyc": {
@@ -11,21 +11,9 @@
       ".mjs"
     ]
   },
-  "scripts": {
-    "start": "nodemon --experimental-modules index.mjs",
-    "test": "nyc mocha",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls "
+  "directories": {
+    "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/swaibat/Quick-Credit-restful-api.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/swaibat/Quick-Credit-restful-api/issues"
-  },
-  "homepage": "https://github.com/swaibat/Quick-Credit-restful-api#readme",
   "dependencies": {
     "@hapi/joi": "^15.0.1",
     "david": "^11.0.0",
@@ -51,7 +39,19 @@
     "should": "^13.2.3",
     "supertest": "^4.0.2"
   },
-  "directories": {
-    "test": "test"
-  }
+  "scripts": {
+    "start": "nodemon --experimental-modules index.mjs",
+    "test": "nyc mocha",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swaibat/Quick-credit-api-v1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swaibat/Quick-credit-api-v1/issues"
+  },
+  "homepage": "https://github.com/swaibat/Quick-credit-api-v1#readme"
 }

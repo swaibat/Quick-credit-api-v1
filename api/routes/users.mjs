@@ -16,6 +16,6 @@ router.post('/auth/signin',postSignin);
 
 // Mark a user as verified
 router.patch('/:email/verify',adminCheck,userVerify);
-    
+
 
 export default router;

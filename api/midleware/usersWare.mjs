@@ -10,3 +10,4 @@ export function userVerify(req, res){
     user.status = "verified";
     res.send(user);
 } 
+

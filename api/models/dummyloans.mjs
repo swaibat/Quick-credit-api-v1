@@ -1,6 +1,6 @@
 export const loans = [
   {
-    id: 'QK-588A979LL3M',
+    id: 'QK-588A979dL3M',
     user: 'job@gmail.com',
     createdOn: 1156743783791,
     status: 'pending',
@@ -13,7 +13,7 @@ export const loans = [
   },
 
   {
-    id: 'QK-588A979LL3M',
+    id: 'QK-588A979Lh3M',
     user: 'kenny@gmail.com',
     createdOn: 1356713783791,
     status: 'approved',
@@ -26,7 +26,7 @@ export const loans = [
   },
 
   {
-    id: 'QK-588A979LL3M',
+    id: 'QK-588A979pL3M',
     user: 'allan@gmail.com',
     createdOn: 1556793783791,
     status: 'rejected',
@@ -39,7 +39,7 @@ export const loans = [
   },
 
   {
-    id: 'QK-588A979LL3M',
+    id: 'QK-588A979nL3M',
     user: 'swaib@gmail.com',
     createdOn: 1556793783791,
     status: 'approved',
@@ -52,7 +52,7 @@ export const loans = [
   },
   {
 
-    id: 'QK-588A979LL3M',
+    id: 'QK-588A979cL3M',
     user: 'allan@gmail.com',
     createdOn: 1556793783791,
     status: 'rejected',

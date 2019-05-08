@@ -55,3 +55,18 @@ export function viewSpecific(req, res) {
   loan.createdOn = timeago.format(loan.createdOn);
   res.status(200).send(loan)
 }
+
+export function query(req, res, next) {
+  const loanStatus = loans.filter(b => b.status === req.query.status);
+  const loanRepaid = loanStatus.filter(b => b.repaid === JSON.parse(req.query.repaid));
+  if (typeof req.query.status !== 'undefined' && typeof req.query.status !== 'undefined') {
+    if (loanStatus) {
+      if (loanRepaid) {
+        res.send(loanRepaid);
+      }
+    }
+    return;
+  }
+  next();
+}
+

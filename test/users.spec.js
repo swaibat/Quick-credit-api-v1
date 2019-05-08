@@ -130,7 +130,7 @@ describe('verify User', () => {
   });
 });
 
-describe('verify User', () => {
+describe('verify User non admin', () => {
   let token = '';
 
   before((done) => {
@@ -146,7 +146,7 @@ describe('verify User', () => {
         done();
       });
   });
-  it('check user verification', (done) => {
+  it('checks user verification if user not admin', (done) => {
     request(app)
       .patch('/api/v1/users/andy@gmail.com/verify')
       .set('Authorization', `Bearer ${token}`)

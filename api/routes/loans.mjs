@@ -13,12 +13,15 @@ router.post('/',appliedCheck, postLoan);
 router.get('/:loanId/repayments',LoanRepayments);
 
 // all loans applications
-router.get('/',adminCheck,viewLoans);
+router.get('/',adminCheck,query,viewLoans);
 
 // all loans applications
 router.get('/:loanId',adminCheck,viewSpecific);
 
 // all loans applications
-router.get('/api/v1/loans?status=approved&repaid=false',adminCheck,query);
+router.get('/api/v1/loans?status=approved&repaid=false');
+
+// all loans applications
+router.get('/api/v1/loans?status=approved&repaid=true');
 
 export default router;

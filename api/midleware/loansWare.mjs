@@ -69,3 +69,15 @@ export function query(req, res, next) {
   }
   next();
 }
+
+export function approveLoan(req, res) {
+  const loan = loans.find(a => a.id === req.params.loanId);
+  loan.status = 'approved'
+  res.status(200).send(loan)
+}
+
+export function rejectLoan(req, res) {
+  const loan = loans.find(a => a.id === req.params.loanId);
+  loan.status = 'rejected'
+  res.status(200).send(loan)
+}

@@ -75,7 +75,7 @@ export const loans = [
     paymentInstallment: 10.6,
     balance: 300,
     interest: 15,
-  },
+  }
 ];
 
 export const repayments = [

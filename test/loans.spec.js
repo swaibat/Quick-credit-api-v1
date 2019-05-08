@@ -97,9 +97,21 @@ describe('Accessible by admin Only', () => {
         done();
       });
   });
-  it('checks query stings', (done) => {
+  it('checks not repaid loans', (done) => {
     request(app)
       .get('/api/v1/loans?status=approved&repaid=false')
+      .set('Authorization', `Bearer ${token}`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(200);
+        res.body[0].should.have.property('status','approved');
+        res.body[0].should.have.property('repaid',false);
+        done();
+      });
+  });
+  it('checks for repaid loans', (done) => {
+    request(app)
+      .get('/api/v1/loans?status=approved&repaid=true')
       .set('Authorization', `Bearer ${token}`)
       .set('Accept', 'application/json')
       .end((err, res) => {

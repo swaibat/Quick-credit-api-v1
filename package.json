@@ -6,9 +6,6 @@
   "nyc": {
     "require": [
       "reify"
-    ],
-    "extension": [
-      ".mjs"
     ]
   },
   "directories": {
@@ -28,6 +25,11 @@
     "timeago.js": "^4.0.0-beta.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/register": "^7.4.4",
     "chai": "^4.2.0",
     "coveralls": "^3.0.3",
     "eslint": "^5.16.0",
@@ -42,7 +44,7 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
-    "start": "nodemon --experimental-modules index.mjs",
+    "start": "babel-node index.js",
     "test": "nyc mocha",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls "
   },

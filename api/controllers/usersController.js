@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import jwt from 'jsonwebtoken';
 import short from 'short-uuid';
-import { users } from '../models/dummyUsers.mjs';
+import { users } from '../models/dummyUsers.js';
 const appSecreteKey = 'hksuua7as77hjvb348b3j2hbrbsc9923k';
 // Mark a client as verified.
 export function adminCheck(req, res, next) {

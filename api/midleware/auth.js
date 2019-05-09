@@ -1,7 +1,7 @@
 import joi from '@hapi/joi';
 import jwt from 'jsonwebtoken';
 import short from 'short-uuid';
-import { users } from '../models/dummyUsers.mjs';
+import { users } from '../models/dummyUsers.js';
 const appSecreteKey = 'hksuua7as77hjvb348b3j2hbrbsc9923k';
 
 export function inputValidator(req, res, next) {

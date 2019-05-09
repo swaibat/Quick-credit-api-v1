@@ -148,16 +148,6 @@ describe('Accessible by admin Only', () => {
         done(); 
       });
   });
-  it('checks if query is not defined', (done) => {
-    request(app)
-      .get('/api/v1/loans?status=approved&repaid=true')
-      .set('Authorization', `Bearer ${token}`)
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        res.status.should.equal(200);
-        done();
-      });
-  });
   it('Approves user (Admin)', (done) => {
     request(app)
       .patch('/api/v1/loans/QK-588A979nL3M/approve')

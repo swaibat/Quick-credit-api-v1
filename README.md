@@ -10,7 +10,8 @@ Quick Credit is an online lending platform that provides short term soft loans t
 ## Folder structure
 Within Quick-credit-api folder you WIll find the following directories and files. Cross check in any of the file misses the app may have a problem while bieng excetuted
 
-```Quick-credit-api-v1/
+```
+            Quick-credit-api-v1/
                     │
                     ├── api/
                     │   ├── models/

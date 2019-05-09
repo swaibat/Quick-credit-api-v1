@@ -7,6 +7,21 @@ Quick Credit is an online lending platform that provides short term soft loans t
 [![dependencies Status](https://david-dm.org/swaibat/Quick-credit-api-v1/status.svg)](https://david-dm.org/swaibat/Quick-credit-api-v1)
 [![devDependencies Status](https://david-dm.org/swaibat/Quick-credit-api-v1/dev-status.svg)](https://david-dm.org/swaibat/Quick-credit-api-v1?type=dev)
 [![Maintainability](https://api.codeclimate.com/v1/badges/91e8927e9c5d8ba586bf/maintainability)](https://codeclimate.com/github/swaibat/Quick-credit-api-v1/maintainability)
+## Folder structure
+Within Quick-credit-api folder you WIll find the following directories and files. Cross check in any of the file misses the app may have a problem while bieng excetuted
+
+```Quick-credit-api-v1/
+                    │
+                    ├── api/
+                    │   ├── models/
+                    │   ├── middleware/
+                    │   └── routes
+                    ├── tests/
+                    ├── .gitignore/
+                    ├── index.mjs
+                    ├── package.json
+                    └──README.md
+```
 
 ## Getting Started
 By running the following command quick-credit-api will be automatically downloaded to your local machine so lets get started.

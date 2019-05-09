@@ -141,4 +141,24 @@ describe('Accessible by admin Only', () => {
         done();
       });
   });
+  it('Creates a loan repayment record', (done) => {
+    request(app)
+      .post('/api/v1/loans/QK-588A979nL3M/repayment')
+      .set('Authorization', `Bearer ${token}`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(201);
+        done();
+      });
+  });
+  it('Creates a loan repayment record', (done) => {
+    request(app)
+      .get('/api/v1/loans?status=approved&repaid=false')
+      .set('Authorization', `Bearer ${token}`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.body.should.have.property('status', 'verified');
+        done();
+      });
+  });
 });

@@ -81,3 +81,20 @@ export function rejectLoan(req, res) {
   loan.status = 'rejected'
   res.status(200).send(loan)
 }
+
+export function createLoanRecord(req, res) {
+  // post the loan
+  const loan = {
+    id: short.generate(),
+    loanId: req.params.loanId,
+    createdOn: Date.now(),
+    amount: req.body.amount,
+    monthlyInstallment: req.body.monthlyInstallment,
+    paidAmount: req.body.paidAmount,
+    balance: req.body.balance,
+  };
+  loans.push(loan);
+  res.status(201).send({status:201,loan:loan});
+}
+
+

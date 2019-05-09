@@ -2,7 +2,7 @@
   "name": "quick-credit-api",
   "version": "1.0.1",
   "description": "Quick Credit is anonline lending platform that provides short term soft loans to individuals.This helps solve problems of financial inclusion as away to alleviate poverty and empower low income earners.",
-  "main": "index.js",
+  "main": "index.mjs",
   "nyc": {
     "require": [
       "reify"
@@ -13,6 +13,9 @@
   },
   "directories": {
     "test": "test"
+  },
+  "engines": {
+    "node": "10.15.3"
   },
   "dependencies": {
     "@hapi/joi": "^15.0.1",

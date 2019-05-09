@@ -1,7 +1,7 @@
 import express from 'express';
 import { appliedCheck, postLoan, LoanRepayments,viewLoans,viewSpecific,query} from '../midleware/loansWare';
 import {adminCheck} from '../controllers/usersController';
-import { approveLoan, rejectLoan} from '../midleware/loansWare.mjs';
+import { approveLoan, rejectLoan,createLoanRecord} from '../midleware/loansWare.mjs';
 
 
 const router = express.Router();
@@ -30,5 +30,8 @@ router.patch('/:loanId/approve',adminCheck,approveLoan);
 
 // all loans applications
 router.patch('/:loanId/reject',adminCheck,rejectLoan);
+
+// Create a loan repayment record
+router.post('/:loanId/repayment',adminCheck,createLoanRecord);
 
 export default router;

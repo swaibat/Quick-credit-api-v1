@@ -31,34 +31,3 @@ export function checkUserExists(req, res, next) {
   }
   next();
 }
-
-export function postData(req, res) {
-  // token const
-  const token = jwt.sign({ email: req.body.email }, appSecreteKey, { expiresIn: '1hr' });
-  const user = {
-    id: short.generate(),
-    token,
-    email: req.body.email,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    password: req.body.password,
-    adress: req.body.adress,
-    isAdmin: false,
-  };
-  users.push(user);
-  res.status(201).send(user);
-}
-
-// sigin  midlaware
-export function postSignin(req, res) {
-  // token const
-  const token = jwt.sign({ email: req.body.email }, appSecreteKey, { expiresIn: '1hr' });
-  // check for the details existance
-  const user = users.find(u => u.email === req.body.email);
-  if (!user || user.password !== req.body.password) {
-    res.status(401).send({ message: 'Auth failed,invalid details' });
-    return;
-  }
-  user.token = token;
-  res.status(200).send(user);
-}

@@ -1,7 +1,7 @@
 import express from 'express';
-import { appliedCheck, postLoan, LoanRepayments,viewLoans,viewSpecific,query} from '../midleware/loansWare';
+import { appliedCheck,query} from '../midleware/loansWare';
 import {adminCheck} from '../controllers/usersController';
-import { approveLoan, rejectLoan} from '../midleware/loansWare.mjs';
+import { postLoan, approveLoan, rejectLoan,viewLoans,LoanRepayments,viewSpecific} from '../controllers/loansController';
 import verifier from 'express-jwt';
 
 const appSecreteKey = 'hksuua7as77hjvb348b3j2hbrbsc9923k';

@@ -94,8 +94,20 @@ these tests specifically targets the following
 
 all test are located in the test folder at the root called `test` and Mocha,Chaiand Supertest have been used as testing framework
 here is sample code
-```
-Give an example
+```javascript
+describe('Test Post Loans', () => {
+  it('checks if loan posts', (done) => {
+    request(app)
+      .post('/api/v1/loans')
+      .send({ user: 'joelb@gmail.com' })
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(201);
+        res.body.should.have.property('status', 'pending');
+        done();
+      });
+  });
+});
 ```
 
 ## Author

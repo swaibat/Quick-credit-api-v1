@@ -151,14 +151,4 @@ describe('Accessible by admin Only', () => {
         done();
       });
   });
-  it('Creates a loan repayment record', (done) => {
-    request(app)
-      .get('/api/v1/loans?status=approved&repaid=false')
-      .set('Authorization', `Bearer ${token}`)
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        res.body.should.have.property('status', 'verified');
-        done();
-      });
-  });
 });

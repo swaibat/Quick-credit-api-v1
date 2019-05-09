@@ -181,3 +181,15 @@ describe('Accessible by admin Only', () => {
       });
   });
 });
+
+describe('Other ERRORS Tests', () => {
+  it('test 404 erorr', (done) => {
+    request(app)
+      .get('/api/v1/loa')
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(404);
+        done();
+      });
+  });
+});

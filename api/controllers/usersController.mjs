@@ -1,5 +1,8 @@
 import { users } from '../models/dummyUsers';
+const appSecreteKey = 'hksuua7as77hjvb348b3j2hbrbsc9923k';
 import jwtDecode from 'jwt-decode';
+import verifier from 'express-jwt';
+
 // Mark a client as verified.
 export function adminCheck(req, res, next) {
   // check if user is admin

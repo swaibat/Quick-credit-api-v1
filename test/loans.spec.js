@@ -11,11 +11,28 @@ app.use(express.json());
 app.use('/api/v1/loans', loansRoute);
 app.use('/api/v1/users', usersRoute);
 
-describe('Test Post Loans', () => {
+
+describe('Protected Routes Accessible with users with Tokens', () => {
+  let token = '';
+  before((done) => {
+    request(app)
+      .post('/api/v1/users/auth/signin')
+      .send({
+        email: 'bob@gmail.com',
+        password: 'anderson',
+      })
+      .end((err, res) => {
+        const result = JSON.parse(res.text);
+        token = result.token;
+        done();
+      });
+  });
+
   it('checks if loan posts', (done) => {
     request(app)
       .post('/api/v1/loans')
       .send({ user: 'joelb@gmail.com' })
+      .set('Authorization', `Bearer ${token}`)
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(201);
@@ -27,6 +44,7 @@ describe('Test Post Loans', () => {
     request(app)
       .post('/api/v1/loans')
       .send({ user: 'job@gmail.com' })
+      .set('Authorization', `Bearer ${token}`)
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(409);
@@ -34,13 +52,11 @@ describe('Test Post Loans', () => {
         done();
       });
   });
-});
-
-describe('Test Loans Get methods', () => {
   it('checks if No Loans repayment found', (done) => {
     request(app)
       .get('/api/v1/loans/QK-99588A9795L3/repayments')
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
         res.status.should.equal(404);
         res.body.message.should.equal('No loan repayment history found');
@@ -50,6 +66,7 @@ describe('Test Loans Get methods', () => {
   it('checks if repayment history is sent ', (done) => {
     request(app)
       .get('/api/v1/loans/QK-588A979LL3M/repayments')
+      .set('Authorization', `Bearer ${token}`)
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
@@ -104,12 +121,34 @@ describe('Accessible by admin Only', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
-        res.body[0].should.have.property('status','approved');
-        res.body[0].should.have.property('repaid',false);
+        res.body[0].should.have.property('status', 'approved');
+        res.body[0].should.have.property('repaid', false);
         done();
       });
   });
   it('checks for repaid loans', (done) => {
+    request(app)
+      .get('/api/v1/loans?status=approved&repaid=true')
+      .set('Authorization', `Bearer ${token}`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(200);
+        res.body[0].should.have.property('status', 'approved');
+        res.body[0].should.have.property('repaid', true);
+        done();
+      });
+  });
+  it('checks if query is defined', (done) => {
+    request(app)
+      .get('/api/v1/loans?status=approved&repaid=true')
+      .set('Authorization', `Bearer ${token}`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(200);
+        done(); 
+      });
+  });
+  it('checks if query is not defined', (done) => {
     request(app)
       .get('/api/v1/loans?status=approved&repaid=true')
       .set('Authorization', `Bearer ${token}`)
@@ -126,7 +165,7 @@ describe('Accessible by admin Only', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
-        res.body.should.have.property('status','approved');
+        res.body.should.have.property('status', 'approved');
         done();
       });
   });
@@ -137,7 +176,19 @@ describe('Accessible by admin Only', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
-        res.body.should.have.property('status','rejected');
+        res.body.should.have.property('status', 'rejected');
+        done();
+      });
+  });
+});
+
+describe('Other ERRORS Tests', () => {
+  it('test 404 erorr', (done) => {
+    request(app)
+      .get('/api/v1/loa')
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(404);
         done();
       });
   });

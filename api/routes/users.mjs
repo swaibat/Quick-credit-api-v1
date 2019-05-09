@@ -1,7 +1,7 @@
 
 import express from 'express';
-import {inputValidator,checkUserExists,postData,postSignin} from '../midleware/auth';
-import {adminCheck} from '../controllers/usersController';
+import {inputValidator,checkUserExists} from '../midleware/auth';
+import {adminCheck,postData,postSignin} from '../controllers/usersController';
 import {userVerify} from '../midleware/usersWare';
 
 

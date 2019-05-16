@@ -1,25 +1,26 @@
 import express from 'express';
 import { appliedCheck,query} from '../midleware/loansWare';
-import {adminCheck} from '../controllers/usersController';
-import { postLoan, approveLoan, rejectLoan,viewLoans,LoanRepayments,viewSpecific} from '../controllers/loansController';
-import verifier from 'express-jwt';
+import {adminCheck} from '../midleware/usersWare';
+import { Loan} from '../controllers/loansController';
+import { ensureToken} from '../midleware/auth';
 
-const appSecreteKey = 'hksuua7as77hjvb348b3j2hbrbsc9923k';
 const router = express.Router();
-const verifyToken = verifier({secret:appSecreteKey})
 
+
+const loan = new Loan();
+// const user = new User();
 
 //CLIENT post loan application
-router.post('/',verifyToken,appliedCheck, postLoan);
+router.post('/',ensureToken,appliedCheck, loan.postLoan);
 
 //CLIENT View loan repayment history
-router.get('/:loanId/repayments',verifyToken,LoanRepayments);
+router.get('/:loanId/repayments',ensureToken,loan.LoanRepayments);
 
 //ADMIN all loans applications
-router.get('/',verifyToken,adminCheck,query,viewLoans);
+router.get('/',ensureToken,adminCheck,query,loan.viewLoans);
 
 //ADMIN view specific loans application
-router.get('/:loanId',verifyToken,adminCheck,viewSpecific);
+router.get('/:loanId',ensureToken,adminCheck,loan.viewSpecific);
 
 //ADMIN  query not repaid loans applications
 router.get('/api/v1/loans?status=approved&repaid=false');
@@ -28,9 +29,9 @@ router.get('/api/v1/loans?status=approved&repaid=false');
 router.get('/api/v1/loans?status=approved&repaid=true');
 
 //ADMIN  approve loan
-router.patch('/:loanId/approve',verifyToken,adminCheck,approveLoan);
+router.patch('/:loanId/approve',ensureToken,adminCheck,loan.approveLoan);
 
 //ADMIN  reject loan
-router.patch('/:loanId/reject',verifyToken,adminCheck,rejectLoan);
+router.patch('/:loanId/reject',ensureToken,adminCheck,loan.rejectLoan);
 
 export default router;

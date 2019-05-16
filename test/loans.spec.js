@@ -3,7 +3,6 @@ import request from 'supertest';
 import should from 'should';
 import loansRoute from '../api/routes/loans';
 import usersRoute from '../api/routes/users';
-// import app from '../index';
 
 const app = express();
 app.use(express.json());
@@ -72,6 +71,16 @@ describe('Protected Routes Accessible with users with Tokens', () => {
         res.status.should.equal(200);
         res.body[0].should.have.property('amount').which.is.a.Number();
         res.body[0].should.have.property('monthlyInstallment').which.is.a.Number();
+        done();
+      });
+  });
+  it('token availability', (done) => {
+    request(app)
+      .get('/api/v1/loans')
+      .set('Authorization', `Bearer "${token}"`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(403);
         done();
       });
   });

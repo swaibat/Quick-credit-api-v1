@@ -1,4 +1,4 @@
-import { loans} from '../models/dummyloans';
+import { loans} from '../models/loans';
 
 // apply for loan
 export function appliedCheck(req, res, next) {

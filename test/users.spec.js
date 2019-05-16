@@ -2,7 +2,7 @@ import express from 'express';
 import request from 'supertest';
 import should from 'should';
 import usersRoute from '../api/routes/users';
-import { users, testData, token } from '../api/models/dummyUsers';
+import {testData} from '../api/models/users';
 
 const app = express();
 app.use(express.json());
@@ -153,7 +153,7 @@ describe('verify User non admin', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(403);
-        res.body.message.should.equal('Forbidden');
+        res.body.message.should.equal('Forbidden Only Admin can access');
         done();
       });
   });

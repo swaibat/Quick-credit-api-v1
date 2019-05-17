@@ -35,7 +35,38 @@ or
 ```
 git clone https://github.com/swaibat/quick-credit-ui.git
 ```
+### Prerequisites
 
+before you install the software make sure you have the following already installed on your machine
+
+- nodejs get it [here](https://nodejs.org)
+- Nodemon installed globally by runing `npm i nodemon -g`
+
+
+### Installing api
+
+A step by step series of examples that tell you how to get a development env running
+1. run
+```
+npm i 
+```
+To install all the necessary packages on your local computer
+
+2. To start your sever
+```
+npm start
+```
+this will start your application and run on **port 3000**
+
+## Running the tests
+
+TO run the test for the api 
+```
+npm run test 
+```
+3. ### Endpoints and methods
+
+So now you can access the following routes using provided methods
 ## Required Features
 
 - User (client) can **sign up**
@@ -106,48 +137,7 @@ The API is currently in version 1 (v1) and is hosted at
 [https://quick-credit-api.herokuapp.com/documentation](https://quick-credit-api.herokuapp.com/documentation)
 
 
-### Prerequisites
 
-before you install the software make sure you have the following already installed on your machine
-
-- nodejs get it [here](https://nodejs.org)
-- Nodemon installed globally by runing `npm i nodemon -g`
-
-
-### Installing api
-
-A step by step series of examples that tell you how to get a development env running
-1. run
-```
-npm i 
-```
-To install all the necessary packages on your local computer
-
-2. To start your sever
-```
-npm start
-```
-this will start your application and run on **port 3000**
-
-3. ### Endpoints and methods
-
-So now you can access the following routes using provided methods
-
-| method  | for what                                 |
-| ------- |-----------------------------------------:|
-| POST    | To POST NEW users and loans              |
-| GET     | TO GET all + specific users and loans    |
-| PATCH   | To EDIT some portion of data             |
-
-
-And repeat
-
-## Running the tests
-
-TO run the test for the api 
-```
-npm run test 
-```
 or you can view the completed tests on server via [coveralls](https://coveralls.io/github/swaibat/Quick-credit-api-v1?branch=develop)
 
 ### Break down into end to end tests

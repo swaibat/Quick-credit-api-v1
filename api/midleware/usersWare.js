@@ -7,7 +7,7 @@ export function adminCheck(req, res, next) {
   const decoded = jwtDecode(token);
   const admin = users.find(u => u.email === decoded.email);
   if (!admin || admin.isAdmin === false) {
-    res.status(403).send({ error: 403, message: 'Forbidden Only Admin can access' });
+    res.status(403).send({ error: 403, message: 'Forbidden Only Admin has access' });
     return;
   }
   next();

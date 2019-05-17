@@ -1,4 +1,22 @@
-import { loans} from '../models/loans';
+import joi from '@hapi/joi';
+import { loans } from '../models/loans';
+
+// post loan validation
+export function loanValidate(req, res, next) {
+  // joi validation shema
+  const schema = {
+    user: joi.string().min(3).required(),
+    amount: joi.string().min(3).required(),
+  };
+  const result = joi.validate(req.body, schema);
+  // input validation
+  if (result.error) {
+    res.status(400).send({ message: result.error.details[0].message });
+    return;
+  }
+
+  next();
+}
 
 // apply for loan
 export function appliedCheck(req, res, next) {

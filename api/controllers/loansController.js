@@ -59,3 +59,14 @@ export class Loan {
   }
 }
 
+// approveLoan(req, res) {
+//   const loan = loans.find(a => a.id === req.params.loanId);
+//   if (req.params.status == 'approve'){
+//     loan.status = 'approved';
+//     res.status(200).send(loan);
+//   } else if(req.params.status == 'reject'){
+//     loan.status = 'rejected';
+//     res.status(200).send(loan);
+//   }
+// }
+// }

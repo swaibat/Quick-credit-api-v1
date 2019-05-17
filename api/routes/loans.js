@@ -1,5 +1,5 @@
 import express from 'express';
-import { appliedCheck, query, loanValidate } from '../midleware/loansWare';
+import { appliedCheck, query} from '../midleware/loansWare';
 import { adminCheck } from '../midleware/usersWare';
 import { Loan } from '../controllers/loansController';
 import { ensureToken } from '../midleware/auth';

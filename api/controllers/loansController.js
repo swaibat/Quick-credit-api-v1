@@ -41,7 +41,6 @@ export class Loan {
   // View a specific loan
   viewSpecific(req, res) {
     const loan = loans.find(a => a.id === req.params.loanId);
-    loan.createdOn = timeago.format(loan.createdOn);
     res.status(200).send(loan);
   }
 

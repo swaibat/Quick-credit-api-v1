@@ -12,13 +12,11 @@ export function appliedCheck(req, res, next) {
 }
 
 export function query(req, res, next) {
-  const loanStatus = loans.filter(b => b.status === req.query.status);
-  const loanRepaid = loanStatus.filter(b => b.repaid === JSON.parse(req.query.repaid));
+  const loanStatus = loans.filter(loan => {
+    return loan.status === req.query.status && loan.repaid === JSON.parse(req.query.repaid)});
   if (typeof req.query.status !== 'undefined' && typeof req.query.status !== 'undefined') {
     if (loanStatus) {
-      if (loanRepaid) {
-        res.send(loanRepaid);
-      }
+        res.send(loanStatus);
     }
     return;
   }

@@ -3,30 +3,33 @@ import { users } from '../models/users';
 import jwt from 'jsonwebtoken';
 const appSecreteKey = 'hksuua7as77hjvb348b3j2hbrbsc9923k';
 
+// validate token
 export function ensureToken(req, res, next) {
-  const bearerHeader = req.headers["authorization"];
-  if (typeof bearerHeader !== 'undefined') {
-    const bearer = bearerHeader.split(" ");
-    const bearerToken = bearer[1];
-    req.token = bearerToken;
-    next();
-  } else {
-    res.sendStatus(403).send({message:"Ensure you provide a valid token"});
-    return;
+  let token = req.headers['x-access-token'] || req.headers.authorization;
+  if (token.startsWith('Bearer ')) {
+    // Remove Bearer from string
+    token = token.slice(7, token.length);
   }
-  return;
+  if (token) {
+    jwt.verify(token, appSecreteKey, (err, decoded) => {
+      if (err) {
+        return res.json({
+          error: 403,
+          message: 'Token is  Invalid',
+        });
+      }
+      req.decoded = decoded;
+      next();
+    });
+    return true;
+  }
+  return res.json({
+    success: false,
+    message: 'Auth token is not supplied',
+  });
 }
 
-// export function verifyToken(req, res, next) {
-//   jwt.verify(req.token, appSecreteKey, (err, data) =>{
-//     if (err) {
-//       res.sendStatus(403);
-//     }
-//     next();
-//   });
-//   return;
-// }
-
+// validate input on sighup
 export function inputValidator(req, res, next) {
   // joi validation shema
   const schema = {

@@ -19,9 +19,9 @@ export class User {
     users.push(user);
     res.status(201).send(user);
   }
-  
-  // sigin  
-postSignin(req, res) {
+
+  // sigin
+  postSignin(req, res) {
     // token const
     const token = jwt.sign({ email: req.body.email }, appSecreteKey, { expiresIn: '1hr' });
     // check for the details existance

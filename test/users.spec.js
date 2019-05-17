@@ -153,7 +153,7 @@ describe('verify User non admin', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(403);
-        res.body.message.should.equal('Forbidden Only Admin can access');
+        res.body.message.should.equal('Forbidden Only Admin has access');
         done();
       });
   });

@@ -30,7 +30,7 @@ describe('Protected Routes Accessible with users with Tokens', () => {
   it('checks if loan posts', (done) => {
     request(app)
       .post('/api/v1/loans')
-      .send({ user: 'joelb@gmail.com' })
+      .send({ user: 'joelb@gmail.com',amount: 200})
       .set('Authorization', `Bearer ${token}`)
       .set('Accept', 'application/json')
       .end((err, res) => {
@@ -77,10 +77,21 @@ describe('Protected Routes Accessible with users with Tokens', () => {
   it('token availability', (done) => {
     request(app)
       .get('/api/v1/loans')
-      .set('Authorization', `Bearer "${token}"`)
+      .set('Authorization', `Bearer `)
       .set('Accept', 'application/json')
       .end((err, res) => {
-        res.status.should.equal(403);
+        res.body.message.should.equal('Auth token is not supplied');
+        done();
+      });
+  });
+  it('invalid token', (done) => {
+    request(app)
+      .get('/api/v1/loans')
+      .set('Authorization', `Bearer "hshksjja12"`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.body.error.should.equal(403);
+        res.body.message.should.equal('Token is  Invalid');
         done();
       });
   });

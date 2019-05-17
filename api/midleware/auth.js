@@ -14,7 +14,7 @@ export function ensureToken(req, res, next) {
     jwt.verify(token, appSecreteKey, (err, decoded) => {
       if (err) {
         return res.json({
-          success: false,
+          error: 403,
           message: 'Token is  Invalid',
         });
       }

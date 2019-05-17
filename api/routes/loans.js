@@ -10,7 +10,7 @@ const router = express.Router();
 const loan = new Loan();
 
 // CLIENT post loan application
-router.post('/', ensureToken, appliedCheck, loanValidate, loan.postLoan);
+router.post('/', ensureToken, appliedCheck, loan.postLoan);
 
 // CLIENT View loan repayment history
 router.get('/:loanId/repayments', ensureToken, loan.LoanRepayments);

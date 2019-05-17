@@ -1,0 +1,567 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "quick-credit-api",
+    "description": "Quick Credit is anonline lending platform that provides short term soft loans to individuals.This helps solve problems of financial inclusion as away to alleviate poverty and empower low income earners.",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "rumbiihas@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "",
+  "basePath": "/api/v1",
+  "schemes": ["http"],
+  "produces": ["application/json"],
+
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "creates and enebles users signin"
+    },
+    {
+      "name": "Users",
+      "description": "All users in my datastructure"
+    },
+    {
+      "name": "Loans",
+      "description": "All loans operations"
+    }
+  ],
+  "paths": {
+    "/auth/signup/": {
+      "post": {
+        "description": "Create new user and add to datatables",
+        "summary": "User sign up.",
+        "tags": ["Auth"],
+        "operationId": "V1AuthSignupPost",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "lastName",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "telephone",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "nationality",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "workAddress",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {}
+          },
+          "409": {
+            "description": "Email already taken",
+            "headers": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/auth/signin/": {
+      "post": {
+        "description": "Authenticates user using email and password",
+        "summary": "User sign in.",
+        "tags": ["Auth"],
+        "operationId": "V1AuthSigninPost",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid username/password supplied",
+            "headers": {}
+          },
+          "404": {
+            "description": "User not found",
+            "headers": {}
+          },
+          "405": {
+            "description": "Validation exception",
+            "headers": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/loans": {
+      "post": {
+        "description": "Client to create a new loan application by post method",
+        "summary": "Create a loan appliaction",
+        "tags": ["Loans"],
+        "operationId": "LoansPost",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "amount",
+            "in": "formData",
+            "required": false,
+            "type": "number",
+            "format": "float",
+            "description": ""
+          },
+          {
+            "name": "tenor",
+            "in": "formData",
+            "required": false,
+            "type": "number",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {}
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "headers": {}
+        }
+      },
+      "get": {
+        "description": "Admin to view all loan applications ",
+        "summary": "View all loan applications",
+        "tags": ["Loans"],
+        "operationId": "LoansGet",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "repaid",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {}
+          }
+        },
+        "404": {
+          "description": "No Loans found",
+          "headers": {}
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "headers": {}
+        }
+      }
+    },
+    "/users/{userEmail}/verify": {
+      "patch": {
+        "description": "Admin is able to update a user and mark him as verified by accesssing the route",
+        "summary": "admin update user status",
+        "tags": ["Users"],
+        "operationId": "V1VerifyPatch",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "userEmail",
+            "in": "path",
+            "required": false,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/loans/{loanId}/repayments": {
+      "get": {
+        "description": "on request for specific loan by id accesible by admin",
+        "summary": "Admin can view a specific loan application",
+        "tags": ["Loans"],
+        "operationId": "Loans1RepaymentsGet",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "loanId",
+            "in": "path",
+            "required": false,
+            "type": "integer",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {}
+          },
+          "401": {
+            "description": "Unauthorized Access",
+            "headers": {}
+          },
+          "404": {
+            "description": "Loan Not found",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/loans/{loanId}": {
+      "get": {
+        "description": "Returns a loan identified by an id the system to the admin",
+        "summary": "Admin can view a specific loan application",
+        "tags": ["Loans"],
+        "operationId": "V1Loans1Get",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "loanId",
+            "in": "path",
+            "description": "",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          },
+          "401": {
+            "description": "Unauthorized Access",
+            "headers": {}
+          },
+          "404": {
+            "description": "Loan Not found",
+            "headers": {}
+          }
+        }
+      },
+      "patch": {
+        "description": "Admin to update loans by status of either approved or rejected",
+        "summary": "Update loan status",
+        "tags": ["Loans"],
+        "operationId": "V1Loans1Patch",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "loanId",
+            "in": "path",
+            "description": "",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "status",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {}
+          },
+          "401": {
+            "description": "Unauthorized Access",
+            "headers": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/loans/{loanId}/repayment": {
+      "post": {
+        "description": "Admin can post loan repayment transaction in favour of a client",
+        "summary": "Creates a loan repayment record",
+        "tags": ["Loans"],
+        "operationId": "Loans1RepaymentPost",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "loanId",
+            "in": "path",
+            "description": "",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "amount",
+            "in": "formData",
+            "description": "",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          },
+          "401": {
+            "description": "Unauthorized Access",
+            "headers": {}
+          },
+          "404": {
+            "description": "Loan Not Found",
+            "headers": {}
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "headers": {}
+        }
+      }
+    }
+  },
+
+  "definitions": {
+    "http://quick-credit-api.herokuapp.com/api/v1/auth/signup/Request": {
+      "title": "http://quick-credit-api.herokuapp.com/api/v1/auth/signup/Request",
+      "example": {
+      "email": "andy@gmail.com",
+      "firstName": "andy",
+      "lastName": "mona",
+      "password": "january",
+      "adress": "hoima"
+      },
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "workAddress": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "email",
+        "password",
+        "telephone",
+        "nationality",
+        "workAddress"
+      ]
+    },
+    "http://quick-credit-api.herokuapp.com/api/v1/auth/signin/Request": {
+      "title": "http://quick-credit-api.herokuapp.com/api/v1/auth/signin/Request",
+      "example": {
+        "email": "job@gmail.com",
+        "password": "december"
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": ["email", "password"]
+    },
+    "http://quick-credit-api.herokuapp.com/api/v1/loansRequest": {
+      "title": "http://quick-credit-api.herokuapp.com/api/v1/loansRequest",
+      "example": {
+        "amount": "32000",
+        "tenor": "10"
+      },
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string"
+        },
+        "tenor": {
+          "type": "string"
+        }
+      },
+      "required": ["amount", "tenor"]
+    },
+    "http://quick-credit-api.herokuapp.com/api/v1/loans/:idRequest": {
+      "title": "http://quick-credit-api.herokuapp.com/api/v1/loans/:idRequest",
+      "example": {
+        "status": "Rejected"
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": ["status"]
+    },
+    "http://quick-credit-api.herokuapp.com/api/v1/loans/:loanId/repaymenstRequest": {
+      "title": "http://quick-credit-api.herokuapp.com/api/v1/loans/:loanId/repaymenstRequest",
+      "example": {
+        "amount": 4000
+      },
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": ["amount"]
+    }
+  }
+}

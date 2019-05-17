@@ -29,7 +29,7 @@ export const loans = [
     id: 'QK-588A979pL3M',
     user: 'allan@gmail.com',
     createdOn: 1556793783791,
-    status: 'rejected',
+    status: 'pending',
     repaid: false,
     tenor: 50,
     amount: 1200.7,

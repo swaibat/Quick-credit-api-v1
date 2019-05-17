@@ -7,7 +7,7 @@ import swaggerDoc from './swagger.json';
 const app = express();
 app.use(express.json());
 
-app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
+app.use('/documentation', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use('/api/v1/users', usersRoute);
 app.use('/api/v1/loans', loansRoute);
 
@@ -24,4 +24,4 @@ app.use((error, req, res, next) => {
 });
 
 
-app.listen(process.env.PORT || 8080, () => console.log('listening on port 8080'));
+app.listen(process.env.PORT || 3000, () => console.log('listening on port 3000'));

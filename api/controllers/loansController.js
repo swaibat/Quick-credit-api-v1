@@ -58,6 +58,29 @@ export class Loan {
     loan.status = 'rejected';
     res.status(200).send(loan);
   }
+  postLoanToUser(req, res) {
+    const loanHistory = repayments.find(loan => loan.id === req.params.loanId);
+    if (!loanHistory || loanHistory.length < 1) {
+      res.status(404).send({ message: 'No loan repayment history found' });
+      return;
+    }
+    const interest =  (5 / 100) * req.body.amount,
+    balance = parseFloat(req.body.amount) + interest,
+    loan = {
+      id: Math.random().toString(35).slice(2),
+      user: req.body.user,
+      createdOn: Date.now(),
+      status: 'pending',
+      repaid: false,
+      tenor: req.body.tenor,
+      amount: req.body.amount,
+      paymentInstallment: balance / req.body.tenor,
+      balance,
+      interest,
+    };
+    loans.push(loan);
+    res.status(201).send(loan);
+  }
 }
 
 // approveLoan(req, res) {

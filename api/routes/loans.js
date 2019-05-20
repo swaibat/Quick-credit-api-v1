@@ -34,6 +34,6 @@ router.patch('/:loanId/approve', ensureToken, adminCheck, loan.approveLoan);
 router.patch('/:loanId/reject', ensureToken, adminCheck, loan.rejectLoan);
 
 // Admin Create a loan repayment record
-router.post('/:loanId/repayment', ensureToken,adminCheck, loan.LoanRepayments);
+router.post('/:loanId/repayment', ensureToken,adminCheck, loan.postLoanToUser);
 
 export default router;

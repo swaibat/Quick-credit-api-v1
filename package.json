@@ -1,6 +1,6 @@
 {
   "name": "quick-credit-api",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Quick Credit is anonline lending platform that provides short term soft loans to individuals.This helps solve problems of financial inclusion as away to alleviate poverty and empower low income earners.",
   "main": "index.js",
   "nyc": {
@@ -39,9 +39,9 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
-    "start": "babel-node index.js ",
-    "test": "nyc mocha",
+    "start": "babel-node index.js",
     "dev": "nodemon --exec babel-node index.js ",
+    "test": "nyc mocha",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls "
   },
   "repository": {

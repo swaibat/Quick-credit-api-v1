@@ -1,4 +1,4 @@
-import joi from '@hapi/joi';
+import Joi from '@hapi/joi';
 import { users } from '../models/users';
 import jwt from 'jsonwebtoken';
 const appSecreteKey = 'hksuua7as77hjvb348b3j2hbrbsc9923k';
@@ -31,15 +31,14 @@ export function ensureToken(req, res, next) {
 
 // validate input on sighup
 export function inputValidator(req, res, next) {
-  // joi validation shema
-  const schema = {
-    firstName: joi.string().min(3).required(),
-    lastName: joi.string().min(3).required(),
-    adress: joi.string().min(3).required(),
-    password: joi.string().min(3).required(),
-    email: joi.string().min(3).required(),
-  };
-  const result = joi.validate(req.body, schema);
+  const schema = Joi.object().keys({
+    firstName: Joi.string().min(3).regex(/^[a-zA-Z\-]+$/).required(),
+    lastName: Joi.string().min(3).regex(/^[a-zA-Z\-]+$/).required(),
+    adress: Joi.string().min(3).regex(/^[a-zA-Z\-]+$/).required(),
+    password: Joi.string().min(3).regex(/^[a-zA-Z0-9]{3,30}$/),
+    email: Joi.string().email({ minDomainSegments: 2 })
+});
+  const result = Joi.validate(req.body, schema);
   // input validation
   if (result.error) {
     res.status(400).send({ message: result.error.details[0].message });

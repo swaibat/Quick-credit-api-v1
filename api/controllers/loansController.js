@@ -3,8 +3,9 @@ import { loans, repayments } from '../models/loans';
 
 export class Loan {
   postLoan(req, res) {
-    // post the loan
-    const loan = {
+    const interest =  (5 / 100) * req.body.amount,
+    balance = parseFloat(req.body.amount) + interest,
+    loan = {
       id: Math.random().toString(35).slice(2),
       user: req.body.user,
       createdOn: Date.now(),
@@ -12,9 +13,9 @@ export class Loan {
       repaid: false,
       tenor: req.body.tenor,
       amount: req.body.amount,
-      paymentInstallment: (req.body.amount + req.body.interest) / req.body.tenor,
-      balance: 63,
-      interest: (15 / 100) * req.body.amount,
+      paymentInstallment: balance / req.body.tenor,
+      balance,
+      interest,
     };
     loans.push(loan);
     res.status(201).send(loan);
@@ -59,14 +60,3 @@ export class Loan {
   }
 }
 
-// approveLoan(req, res) {
-//   const loan = loans.find(a => a.id === req.params.loanId);
-//   if (req.params.status == 'approve'){
-//     loan.status = 'approved';
-//     res.status(200).send(loan);
-//   } else if(req.params.status == 'reject'){
-//     loan.status = 'rejected';
-//     res.status(200).send(loan);
-//   }
-// }
-// }

@@ -34,11 +34,9 @@ const createTables = () => {
   pool.query(Users)
     .then((res) => {
       return res;
-      pool.end();
     })
     .catch((err) => {
       return err;
-      pool.end();
     });
 };
 
@@ -48,9 +46,10 @@ pool.on('remove', () => {
 
 
 // export pool and createTables to be accessible  from an where within the application
-module.exports = {
+
+export {
   createTables,
   pool,
-};
+}
 
 require('make-runnable');

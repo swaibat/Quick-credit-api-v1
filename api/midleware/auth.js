@@ -1,6 +1,9 @@
 import Joi from '@hapi/joi';
 import { users } from '../models/users';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv'
+dotenv.config()
+
 
 // validate token
 export function ensureToken(req, res, next) {

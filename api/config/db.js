@@ -1,10 +1,12 @@
 import pg from 'pg';
+import dotenv from 'dotenv'
+dotenv.config()
 
 const config = {
-  user: 'postgres', // this is the db user credential
-  database: 'quick_credit',
-  password: 'Kanyanyama01',
-  port: 5432,
+  user: process.env.user, // this is the db user credential
+  database:process.env.database,
+  password: process.env.password,
+  port: process.env.port,
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
 };
@@ -12,7 +14,6 @@ const config = {
 const pool = new pg.Pool(config);
 
 pool.on('connect', () => {
-  console.log('connected to the Database');
 });
 
 const createTables = () => {
@@ -32,17 +33,16 @@ const createTables = () => {
 
   pool.query(Users)
     .then((res) => {
-      console.log(res);
+      return res;
       pool.end();
     })
     .catch((err) => {
-      console.log(err);
+      return err;
       pool.end();
     });
 };
 
 pool.on('remove', () => {
-  console.log('client removed');
   process.exit(0);
 });
 

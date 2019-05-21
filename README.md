@@ -4,8 +4,6 @@ Quick Credit is an online lending platform that provides short term soft loans t
 [![Build Status](https://travis-ci.org/swaibat/Quick-credit-api-v1.svg?branch=develop)](https://travis-ci.org/swaibat/Quick-credit-api-v1)
 [![Coverage Status](https://coveralls.io/repos/github/swaibat/Quick-credit-api-v1/badge.svg?branch=develop)](https://coveralls.io/github/swaibat/Quick-credit-api-v1?branch=develop)
 [![CodeFactor](https://www.codefactor.io/repository/github/swaibat/quick-credit-api-v1/badge)](https://www.codefactor.io/repository/github/swaibat/quick-credit-api-v1)
-[![dependencies Status](https://david-dm.org/swaibat/Quick-credit-api-v1/status.svg)](https://david-dm.org/swaibat/Quick-credit-api-v1)
-[![devDependencies Status](https://david-dm.org/swaibat/Quick-credit-api-v1/dev-status.svg)](https://david-dm.org/swaibat/Quick-credit-api-v1?type=dev)
 [![Maintainability](https://api.codeclimate.com/v1/badges/554af8de13a28038f471/maintainability)](https://codeclimate.com/github/swaibat/Quick-credit-api-v1/maintainability)
 ## Folder structure
 Within Quick-credit-api folder you WIll find the following directories and files. Cross check in any of the file misses the app may have a problem while bieng excetuted

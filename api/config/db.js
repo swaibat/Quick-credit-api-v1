@@ -1,6 +1,4 @@
 import pg from 'pg';
-// import dotenv from 'dotenv'
-// dotenv.config()
 
 const config = {
   user: 'postgres', //this is the db user credential
@@ -14,7 +12,6 @@ const config = {
 const pool = new pg.Pool(config);
 
 pool.on('connect', () => {
-  console.log('connected to the Database');
 });
 
 const createTables = () => {
@@ -59,7 +56,6 @@ const createTables = () => {
   }
 
   pool.on('remove', () => {
-    // eslint-disable-next-line no-console
     console.log('client removed');
     process.exit(0);
   });
@@ -67,7 +63,7 @@ const createTables = () => {
 
 
 //export pool and createTables to be accessible  from an where within the application
-module.exports = {
+export  {
   createTables,
   pool,
 };

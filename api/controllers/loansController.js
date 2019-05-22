@@ -59,4 +59,3 @@ export class Loan {
     res.status(200).send(loan);
   }
 }
-

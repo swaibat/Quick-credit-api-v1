@@ -1,7 +1,9 @@
 import Joi from '@hapi/joi';
 import { users } from '../models/users';
 import jwt from 'jsonwebtoken';
-const appSecreteKey = 'hksuua7as77hjvb348b3j2hbrbsc9923k';
+import dotenv from 'dotenv'
+dotenv.config()
+
 
 // validate token
 export function ensureToken(req, res, next) {
@@ -11,7 +13,7 @@ export function ensureToken(req, res, next) {
     token = token.slice(7, token.length);
   }
   if (token) {
-    jwt.verify(token, appSecreteKey, (err, decoded) => {
+    jwt.verify(token, process.env.appSecreteKey, (err, decoded) => {
       if (err) {
         return res.json({
           error: 403,

@@ -5,7 +5,6 @@ import {pool} from '../services/db';
 const appSecreteKey = 'hksuua7as77hjvb348b3j2hbrbsc9923k';
 export class User {
   postData(req, res) {
-    console.log('we are here', process.env.user);
     // token const
     const token = jwt.sign({ email: req.body.email }, appSecreteKey, { expiresIn: '1hr' });
 

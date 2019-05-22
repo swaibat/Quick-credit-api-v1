@@ -1,43 +1,61 @@
-import jwt from 'jsonwebtoken';
-import { users } from '../models/users';
-import {pool} from '../services/db';
+import timeago from 'timeago.js';
+import { loans, repayments } from '../models/loans';
 
-const appSecreteKey = 'hksuua7as77hjvb348b3j2hbrbsc9923k';
-export class User {
-  postData(req, res) {
-    // token const
-    const token = jwt.sign({ email: req.body.email }, appSecreteKey, { expiresIn: '1hr' });
-
-    const {firstName,lastName,email,address,password} = req.body;
-
-    pool.connect((err, client, done) => {
-      const query = 'INSERT INTO users(firstName,lastName,email,address,password) VALUES($1,$2,$3,$4,$5) RETURNING *';
-      const values = [firstName,lastName,email,address,password];
-  
-      client.query(query, values, (error, result) => {
-        done();
-        if (error) {
-          res.status(400).json({error});
-        }
-        res.status(201).send({
-          status: '201',
-          result: result.rows[0],
-        });
-      });
-    });
+export class Loan {
+  postLoan(req, res) {
+    const interest =  (5 / 100) * req.body.amount,
+    balance = parseFloat(req.body.amount) + interest,
+    loan = {
+      id: Math.random().toString(35).slice(2),
+      user: req.body.user,
+      createdOn: Date.now(),
+      status: 'pending',
+      repaid: false,
+      tenor: req.body.tenor,
+      amount: req.body.amount,
+      paymentInstallment: balance / req.body.tenor,
+      balance,
+      interest,
+    };
+    loans.push(loan);
+    res.status(201).send(loan);
   }
 
-  // sigin
-  postSignin(req, res) {
-    // token const
-    const token = jwt.sign({ email: req.body.email }, appSecreteKey, { expiresIn: '1hr' });
-    // check for the details existance
-    const user = users.find(u => u.email === req.body.email);
-    if (!user || user.password !== req.body.password) {
-      res.status(401).send({ message: 'Auth failed,invalid details' });
+  // View loan repayment history
+  LoanRepayments(req, res) {
+    const loanHistory = repayments.filter(a => a.id === req.params.loanId);
+    if (!loanHistory || loanHistory.length < 1) {
+      res.status(404).send({ message: 'No loan repayment history found' });
       return;
     }
-    user.token = token;
-    res.status(200).send(user);
+    loanHistory.forEach((loan) => {
+      loan.createdOn = timeago.format(loan.createdOn);
+    });
+    res.send(loanHistory);
+  }
+
+  // View loan repayment history
+  viewLoans(req, res) {
+    res.status(200).send(loans);
+  }
+
+  // View a specific loan
+  viewSpecific(req, res) {
+    const loan = loans.find(a => a.id === req.params.loanId);
+    res.status(200).send(loan);
+  }
+
+  // approve a loan application
+  approveLoan(req, res) {
+    const loan = loans.find(a => a.id === req.params.loanId);
+    loan.status = 'approved';
+    res.status(200).send(loan);
+  }
+  
+  // reject a loan application
+  rejectLoan(req, res) {
+    const loan = loans.find(a => a.id === req.params.loanId);
+    loan.status = 'rejected';
+    res.status(200).send(loan);
   }
 }

@@ -28,7 +28,7 @@ describe('Tests Signup route', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.message.should.be.eql('"email" length must be at least 3 characters long');
+        res.body.message.should.be.eql('"email" must be a valid email');
         done();
       });
   });

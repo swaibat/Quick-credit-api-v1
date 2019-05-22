@@ -45,7 +45,8 @@
     "start": "babel-node index.js",
     "dev": "nodemon --exec babel-node index.js ",
     "test": "nyc mocha",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls "
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls ",
+    "create": "babel-node ./api/config/db createTables"
   },
   "repository": {
     "type": "git",

@@ -11,7 +11,7 @@ const router = express.Router();
 const user = new User();
 
 // signup route
-router.post('/auth/signup', inputValidator, checkUserExists, user.postData);
+router.post('/auth/signup',checkUserExists, user.postData);
 
 // signin route
 router.post('/auth/signin', user.postSignin);

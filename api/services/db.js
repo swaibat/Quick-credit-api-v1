@@ -12,7 +12,6 @@ const config = {
 const pool = new pg.Pool(config);
 
 pool.on('connect', () => {
-  console.log('connected to the Database');
 });
 
 const createTables = () => {
@@ -28,7 +27,6 @@ const createTables = () => {
        )`;
     pool.query(users)
       .then((res) => {
-        console.log(res);
         pool.end();
       });
       
@@ -45,11 +43,9 @@ const createTables = () => {
         )`;
     pool.query(loans)
       .then((res) => {
-        console.log(res);
         pool.end();
       })
       .catch((err) => {
-        console.log(err);
         pool.end();
       });
 
@@ -57,15 +53,13 @@ const createTables = () => {
   }
 
   pool.on('remove', () => {
-    // eslint-disable-next-line no-console
-    console.log('client removed');
     process.exit(0);
   });
   
 
 
 //export pool and createTables to be accessible  from an where within the application
-module.exports = {
+export {
   createTables,
   pool,
 };

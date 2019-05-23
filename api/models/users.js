@@ -14,7 +14,7 @@ export class User{
     const {firstName,lastName,email,address,password} = userObj
     const userQuery = 'INSERT INTO users(firstName,lastName,email,address,password) VALUES($1,$2,$3,$4,$5) RETURNING *';
     const values = [firstName,lastName,email,address,password];
-
+    
     return pool.query(userQuery, values) //returns a promise
   }
 

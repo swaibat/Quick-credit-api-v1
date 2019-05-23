@@ -17,6 +17,7 @@
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
     "@hapi/joi": "^15.0.1",
+    "bcrypt": "^3.0.6",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",

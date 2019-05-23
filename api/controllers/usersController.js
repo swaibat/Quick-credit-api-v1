@@ -17,6 +17,8 @@ export class UserController {
     try{
       const user = await userObj.createUser();
       const token = jwt.sign({ email: req.body.email,id: req.body.id,isAdmin: req.body.isAdmin },process.env.appSecreteKey, { expiresIn: '1hr' });
+
+      
       res.status(201).send({
         status:"201",
         user: {
@@ -40,11 +42,11 @@ export class UserController {
 
     const {email,password} = req.body;
     // check if a user with the given email exist.
-  
       const user = await User.getUserByEmail(email);
-      const passCompare = bcrypt.compareSync(password,user.row[0].password);
+      console.log(user.rows[0], 'password ===.')
+      const passCompare = bcrypt.compareSync(password, user.rows[0].password);
       if(passCompare){
-        const token = jwt.sign({ email: req.body.email }, process.env.appSecreteKey, { expiresIn: '1hr' });
+        const token = jwt.sign({ email: req.body.email }, process.env.appSecreteKey, { expiresIn: '8hr' });
         res.status(200).send({
           status: "200",
           message: "You have signed in successfully",
@@ -55,3 +57,4 @@ export class UserController {
     
   }
 }
+

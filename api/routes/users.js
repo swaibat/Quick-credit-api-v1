@@ -1,23 +1,23 @@
 
 import express from 'express';
-import { inputValidator, checkUserExists } from '../midleware/auth';
+import { inputValidator} from '../midleware/auth';
 import { adminCheck } from '../midleware/usersWare';
-import { User } from '../controllers/usersController';
+import { UserController } from '../controllers/usersController';
 import { userVerify } from '../midleware/usersWare';
 
 
 const router = express.Router();
 
-const user = new User();
+const user = new UserController();
 
 // signup route
-router.post('/auth/signup',checkUserExists, user.postData);
+router.post('/auth/signup',inputValidator, signUp);
 
 // signin route
-router.post('/auth/signin', user.postSignin);
+// router.post('/auth/signin', user.postSignin);
 
 // Mark a user as verified
-router.patch('/:email/verify', adminCheck, userVerify);
+// router.patch('/:email/verify', adminCheck, userVerify);
 
 
 export default router;

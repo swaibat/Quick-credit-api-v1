@@ -1,84 +1,26 @@
-export const users = [
-  {
-    id: 'QK-588A979LL3M',
-    email: 'job@gmail.com',
-    firstName: 'job',
-    lastName: 'ogins',
-    password: 'december',
-    adress: 'kigali',
-    status: 'un-verified',
-    isAdmin: true,
-  },
+import { pool } from "../services/db";
 
-  {
-    id: 'QK-JklddaJSH22',
-    email: 'andy@gmail.com',
-    firstName: 'andy',
-    lastName: 'mona',
-    password: 'january',
-    adress: 'hoima',
-    status: 'un-verified',
-    isAdmin: false,
-  },
-  {
-    id: 'QK-JEuww39544n12',
-    email: 'bob@gmail.com',
-    firstName: 'bob',
-    lastName: 'ogins',
-    password: 'anderson',
-    adress: 'kigali',
-    status: 'un-verified',
-    isAdmin: false,
-  },
-];
+export class User{
+  constructor(firstName,lastName,email,address,password){
+    this.firstName = firstName;
+    this.lastName =lastName;
+    this.email = email;
+    this.address = address;
+    this.password = password;
 
-export const testData = [
-  {
-    email: 'job@gmail.com',
-  },
+  }
 
-  {
-    id: 'QK-JklddaJSH22',
-    email: 'an',
-    firstName: 'andy',
-    lastName: 'mona',
-    password: 'january',
-    adress: 'hoima',
-    status: 'un-verified',
-    isAdmin: false,
-  },
-  {
-    id: 'QK-JEuww39544n12',
-    email: 'bob@gmail.com',
-    firstName: 'bob',
-    lastName: 'ogins',
-    password: 'anderson',
-    adress: 'kigali',
-    status: 'un-verified',
-    isAdmin: false,
-  },
-  {
-    email: 'job@gmail.com',
-    firstName: 'job',
-    lastName: 'ogins',
-    adress: 'kigali',
-    password: 'Kanyanyama01',
-  },
-  {
-    email: 'aina@gmail.com',
-    firstName: 'job',
-    lastName: 'ogins',
-    adress: 'kigali',
-    password: 'Kanyanyama01',
-  },
-];
-export const admin = {
-  id: 'QK-588A979LL3M',
-  email: 'job@gmail.com',
-  firstName: 'job',
-  lastName: 'ogins',
-  password: 'december',
-  adress: 'kigali',
-  status: 'un-verified',
-  isAdmin: true,
-};
+  createUser(userObj){
+    const {firstName,lastName,email,address,password} = userObj
+    const userQuery = 'INSERT INTO users(firstName,lastName,email,address,password) VALUES($1,$2,$3,$4,$5) RETURNING *';
+    const values = [firstName,lastName,email,address,password];
+    
+    return pool.query(userQuery, values) //returns a promise
+  }
+
+  static getUserByEmail(email){
+    const query = `SELECT * FROM users WHERE email='${email}'`
+    return pool.query(query)
+  }
+  
+}

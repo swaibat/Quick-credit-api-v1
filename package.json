@@ -17,6 +17,7 @@
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
     "@hapi/joi": "^15.0.1",
+    "bcrypt": "^3.0.6",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
@@ -43,10 +44,10 @@
   },
   "scripts": {
     "start": "babel-node index.js",
-    "dev": "nodemon --exec babel-node index.js ",
+    "dev": "nodemon --exec babel-node index.js",
     "test": "nyc mocha",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls ",
-    "create": "babel-node ./api/config/db createTables"
+    "create": "babel-node ./api/services/db createTables"
   },
   "repository": {
     "type": "git",

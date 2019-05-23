@@ -28,6 +28,7 @@ export class UserController {
           email : user.rows[0].email,
           address : user.rows[0].address,
           isAdmin : user.rows[0].isAdmin,
+          status : user.rows[0].status,
           token
         },
       })

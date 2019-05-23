@@ -1,3 +1,4 @@
+.env
 node_modules
 package-lock.json
 .nyc_output
@@ -5,4 +6,3 @@ package-lock.json
 .vscode
 .coveralls.yml
 coverage
-.env

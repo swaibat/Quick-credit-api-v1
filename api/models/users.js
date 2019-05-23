@@ -10,17 +10,17 @@ export class User{
 
   }
 
-  createUser(userObj){
-    const {firstName,lastName,email,address,password} = userObj
+  createUser(){
     const userQuery = 'INSERT INTO users(firstName,lastName,email,address,password) VALUES($1,$2,$3,$4,$5) RETURNING *';
-    const values = [firstName,lastName,email,address,password];
-    
+    const values = [this.firstName,this.lastName,this.email,this.address,this.password];
+
     return pool.query(userQuery, values) //returns a promise
   }
 
   static getUserByEmail(email){
-    const query = `SELECT * FROM users WHERE email='${email}'`
-    return pool.query(query)
+    const query = 'SELECT * FROM users WHERE email=$1'
+    const values =[email]
+    return pool.query(query, values)
   }
   
 }

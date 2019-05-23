@@ -15,7 +15,6 @@ const config = {
 const pool = new pg.Pool(config);
 
 pool.on('connect', () => {
-  console.log( 'user error')
 });
 
 const createTables = () => {
@@ -28,7 +27,7 @@ const createTables = () => {
         email VARCHAR (50)  NOT NULL,
         status VARCHAR (50) DEFAULT 'un-verified' NOT NULL,
         address VARCHAR (50) NOT NULL,
-        password VARCHAR(50) NOT NULL,
+        password VARCHAR(255) NOT NULL,
         isAdmin BOOLEAN DEFAULT false NOT NULL
        )`;
     pool.query(users)
@@ -37,7 +36,6 @@ const createTables = () => {
         pool.end();
       })
       .catch((err) =>{
-        console.log( 'user error')
       } )
       
     const loans = `CREATE TABLE IF NOT EXISTS
@@ -78,4 +76,3 @@ export {
 };
 
 require('make-runnable');
-

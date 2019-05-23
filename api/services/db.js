@@ -7,7 +7,7 @@ const config = {
   user: process.env.USER, //this is the db user credential
   database: process.env.DATABASE,
   password: process.env.PASSWORD,
-  port: process.env.PORT,
+  port: process.env.DATABASE_PORT,
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
 };
@@ -15,6 +15,7 @@ const config = {
 const pool = new pg.Pool(config);
 
 pool.on('connect', () => {
+  console.log( 'user error')
 });
 
 const createTables = () => {

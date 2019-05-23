@@ -8,7 +8,7 @@ dotenv.config()
 
 export class UserController {
   
-  async postData(req, res) {
+  async signUp(req, res) {
     
     const {firstName,lastName,email,address,password} = req.body;
     const hashPassword = bcrypt.hashSync(password, 10);

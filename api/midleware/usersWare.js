@@ -30,3 +30,4 @@ export function getUserFromToken(req, res){
   const decoded = jwtDecode(token);
   return decoded.email
 }
+

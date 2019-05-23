@@ -3,7 +3,7 @@ import usersRoute from './api/routes/users'
 import loansRoute from './api/routes/loans'
 import swaggerUI from 'swagger-ui-express';
 import swaggerDoc from './swagger.json';
-
+const PORT = 3000 || process.env.PORT;
 const app = express();
 app.use(express.json());
 
@@ -24,4 +24,4 @@ app.use((error, req, res, next) => {
 });
 
 
-app.listen(process.env.PORT || 3000, () => console.log('listening on port 5000'));
+app.listen(PORT, () => console.log(`listening on port ${PORT}`));

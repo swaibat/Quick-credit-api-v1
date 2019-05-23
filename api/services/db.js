@@ -1,10 +1,13 @@
 import pg from 'pg';
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const config = {
-  user: 'postgres', //this is the db user credential
-  database: 'quick_credit',
-  password: 'Kanyanyama01',
-  port: 5432,
+  user: process.env.USER, //this is the db user credential
+  database: process.env.DATABASE,
+  password: process.env.PASSWORD,
+  port: process.env.PORT,
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000,
 };
@@ -22,13 +25,19 @@ const createTables = () => {
         firstName VARCHAR (50) NOT NULL,
         lastName VARCHAR (50) NOT NULL,
         email VARCHAR (50)  NOT NULL,
+        status VARCHAR (50) DEFAULT 'un-verified' NOT NULL,
         address VARCHAR (50) NOT NULL,
-        password VARCHAR(50) NOT NULL
+        password VARCHAR(50) NOT NULL,
+        isAdmin BOOLEAN DEFAULT false NOT NULL
        )`;
     pool.query(users)
       .then((res) => {
+        console.log(res)
         pool.end();
-      });
+      })
+      .catch((err) =>{
+        console.log( 'user error')
+      } )
       
     const loans = `CREATE TABLE IF NOT EXISTS
         loans(
@@ -39,13 +48,16 @@ const createTables = () => {
           repaid boolean DEFAULT false NOT NULL,
           paymentInstallment INT NOT NULL,
           balance FLOAT NOT NULL,
-          interest FLOAT NOT NULL
+          interest FLOAT NOT NULL,
+          userEmail VARCHAR (50)  NOT NULL
         )`;
     pool.query(loans)
       .then((res) => {
+        console.log(res, 'loans')
         pool.end();
       })
       .catch((err) => {
+        console.log(err, 'error')
         pool.end();
       });
 

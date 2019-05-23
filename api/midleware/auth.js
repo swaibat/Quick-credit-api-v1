@@ -1,5 +1,5 @@
 import Joi from '@hapi/joi';
-import { users } from '../models/users';
+import { User } from '../models/users';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv'
 dotenv.config()
@@ -36,7 +36,7 @@ export function inputValidator(req, res, next) {
   const schema = Joi.object().keys({
     firstName: Joi.string().min(3).regex(/^[a-zA-Z\-]+$/).required(),
     lastName: Joi.string().min(3).regex(/^[a-zA-Z\-]+$/).required(),
-    adress: Joi.string().min(3).regex(/^[a-zA-Z\-]+$/).required(),
+    address: Joi.string().min(3).regex(/^[a-zA-Z\-]+$/).required(),
     password: Joi.string().min(3).regex(/^[a-zA-Z0-9]{3,30}$/),
     email: Joi.string().email({ minDomainSegments: 2 })
 });
@@ -50,11 +50,12 @@ export function inputValidator(req, res, next) {
   next();
 }
 
-export function checkUserExists(req, res, next) {
-  const user = users.find(u => u.email === req.body.email);
-  if (user) {
-    res.status(409).send({ message: `user ${user.email} already exists ` });
+export function checkUserExists(req, res, next){
+  const user = User.getUserByEmail(req.body.email);
+  if (user.rows[0]) {
+    res.status(409).send({ message: `user ${user.row[0].email} already exists ` });
     return;
   }
   next();
 }
+

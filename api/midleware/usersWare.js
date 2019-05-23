@@ -25,3 +25,8 @@ export function userVerify(req, res) {
   res.send(user);
 }
 
+export function getUserFromToken(req, res){
+  const token = req.headers.authorization;
+  const decoded = jwtDecode(token);
+  return decoded.email
+}

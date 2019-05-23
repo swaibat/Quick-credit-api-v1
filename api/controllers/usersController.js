@@ -1,52 +1,28 @@
 import jwt from 'jsonwebtoken';
-import { users } from '../models/users';
-import {pool} from '../services/db';
+import { User } from '../models/users';
+import dotenv from 'dotenv'
 
-const appSecreteKey = 'hksuua7as77hjvb348b3j2hbrbsc9923k';
-export class User {
-  postData(req, res) {
-    // token const
-    const token = jwt.sign({ email: req.body.email }, appSecreteKey, { expiresIn: '1hr' });
+dotenv.config()
 
+
+export class UserController {
+  
+  async postData(req, res) {
+    
     const {firstName,lastName,email,address,password} = req.body;
-
-    pool.connect((err, client, done) => {
-      const query = 'INSERT INTO users(firstName,lastName,email,address,password) VALUES($1,$2,$3,$4,$5) RETURNING *';
-      const values = [firstName,lastName,email,address,password];
+    
+    const userObj = new User(firstName,lastName,email,address,password)
+    try{
+      const user = await userObj.createUser();
+      const token = jwt.sign({ email: req.body.email },process.env.appSecreteKey, { expiresIn: '1hr' });
+      res.status(201).send({
+        status:"201",
+        user: user.rows[0],
+        token
+      })
+    }catch(error){
+      res.status(400).send({error})
+    }
   
-      client.query(query, values, (error, result) => {
-        done();
-        if (error) {
-          res.status(400).json({error});
-        }
-        res.status(201).send({
-          status: '201',
-          result: result.rows[0],
-        });
-      });
-    });
-  }
-
-  // sigin
-  postSignin(req, res) {
-    const token = jwt.sign({ email: req.body.email }, appSecreteKey, { expiresIn: '1hr' });
-
-    const {email,password} = req.body;
-
-    pool.connect((err, client, done) => {
-      const query = 'INSERT INTO users(firstName,lastName,email,address,password) VALUES($1,$2,$3,$4,$5) RETURNING *';
-      const values = [firstName,lastName,email,address,password];
-  
-      client.query(query, values, (error, result) => {
-        done();
-        if (error) {
-          res.status(400).json({error});
-        }
-        res.status(201).send({
-          status: '201',
-          result: result.rows[0],
-        });
-      });
-    });
   }
 }

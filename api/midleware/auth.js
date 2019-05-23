@@ -50,12 +50,12 @@ export function inputValidator(req, res, next) {
   next();
 }
 
-export function checkUserExists(req, res, next){
-  const user = User.getUserByEmail(req.body.email);
-  if (user.rows[0]) {
-    res.status(409).send({ message: `user ${user.row[0].email} already exists ` });
+export const  checkUserExists = async (req, res, next) =>{
+  const user = await User.getUserByEmail(req.body.email);
+  if (user && user.rows[0]) {
+    res.status(409).send({ message: 'user already exists' });
     return;
   }
   next();
-}
+};
 

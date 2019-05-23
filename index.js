@@ -4,15 +4,10 @@ import loansRoute from './api/routes/loans'
 import swaggerUI from 'swagger-ui-express';
 import swaggerDoc from './swagger.json';
 
-import {pool} from './api/services/db'
-
 const PORT = process.env.PORT || 3000 ;
 const app = express();
 app.use(express.json());
 
-pool.on('connect', () => {
-  console.log('connected')
-});
 app.use('/documentation', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use('/api/v1/users', usersRoute);
 app.use('/api/v1/loans', loansRoute);

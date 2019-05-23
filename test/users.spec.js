@@ -39,4 +39,21 @@ describe('Tests Signup route', () => {
         done();
       });
   });
+  it('checks for username existance', (done) => {
+        request(app)
+          .post('/api/v1/users/auth/signup')
+          .send({
+            "firstName": "hogge",
+            "lastName": "vesela",
+            "email": "melan@gmail.com",
+            "address": "kigali",
+            "password": "december"  
+        })
+          .set('Accept', 'application/json')
+          .end((err, res) => {
+            res.status.should.equal(409);
+            res.body.message.should.equal('user already exists');
+            done();
+          });
+      });
 });

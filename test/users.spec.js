@@ -30,35 +30,12 @@ describe('Tests Signup route', () => {
         firstName: 'andy',
         lastName: 'mona',
         password: 'january',
-        adress: 'hoima',
+        address: 'hoima',
       })
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(400);
         res.body.message.should.be.eql('"email" must be a valid email');
-        done();
-      });
-  });
-
-  it('checks for username existance', (done) => {
-    request(app)
-      .post('/api/v1/users/auth/signup')
-      .send(testData[3])
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        res.status.should.equal(409);
-        res.body.message.should.equal(`user ${testData[3].email} already exists `);
-        done();
-      });
-  });
-
-  it('checks if user has been posted', (done) => {
-    request(app)
-      .post('/api/v1/users/auth/signup')
-      .send(testData[4])
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        res.status.should.equal(201);
         done();
       });
   });

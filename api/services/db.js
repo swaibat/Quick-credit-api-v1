@@ -48,15 +48,14 @@ const createTables = () => {
           paymentInstallment INT NOT NULL,
           balance FLOAT NOT NULL,
           interest FLOAT NOT NULL,
-          userEmail VARCHAR (50)  NOT NULL
+          userEmail VARCHAR (50)  NOT NULL,
+          status VARCHAR (50)  NOT NULL
         )`;
     pool.query(loans)
       .then((res) => {
-        console.log(res, 'loans')
         pool.end();
       })
       .catch((err) => {
-        console.log(err, 'error')
         pool.end();
       });
 

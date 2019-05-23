@@ -37,13 +37,18 @@ export function inputValidator(req, res, next) {
     firstName: Joi.string().min(3).regex(/^[a-zA-Z\-]+$/).required(),
     lastName: Joi.string().min(3).regex(/^[a-zA-Z\-]+$/).required(),
     address: Joi.string().min(3).regex(/^[a-zA-Z0-9]+$/).required(),
-    password: Joi.string().min(3).regex(/^[a-zA-Z0-9]{3,30}$/),
-    email: Joi.string().email({ minDomainSegments: 2 })
+    password: Joi.string().min(3).regex(/^[a-zA-Z0-9]{3,30}$/).required(),
+    email: Joi.string().email({ minDomainSegments: 2 }).required(),
 });
   const result = Joi.validate(req.body, schema);
   // input validation
+
   if (result.error) {
-    return res.status(400).send({ message: result.error.details[0].message });
+    const errMsg = result.error.details[0].message
+    if (errMsg.match('pattern')){
+      return res.status(400).send({ error:404,message: 'Ooops try to insert in a valid character' })
+    }
+    return res.status(400).send({ message: `${errMsg}` });
   }
 
   next();

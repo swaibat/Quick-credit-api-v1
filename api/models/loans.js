@@ -38,5 +38,11 @@ export class Loan{
       return pool.query(query,variables) 
   }
 
+  updateLoanStatus(status, id){
+    const query = 'UPDATE loans SET status=$1 WHERE id=$2'
+    const variables = [status, id]
+    return pool.query(query,variables) 
+  }
+
 }
 

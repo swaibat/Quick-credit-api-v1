@@ -22,5 +22,11 @@ export class User{
     const values =[email]
     return pool.query(query, values)
   }
+
+  static verifyUser(email){
+    const query = 'UPDATE users SET status=$1 WHERE email=$2'
+    const variables = ['verified', email]
+    return pool.query(query,variables) 
+}
   
 }

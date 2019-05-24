@@ -21,16 +21,14 @@ export async function query(req, res, next) {
   if (status && repaid) {
     const loansResult = await loanObj.getLoanStatus(status, repaid);
     if (!loansResult.rows || loansResult.rows.length < 1) {
-      return res.status().send({error:404,message:'No loan found in that category'})
-    }else{
-      const data = loansResult.rows;
-      res.status(200).send({
-        status: '200',
-        data,
-      });
+      return res.status().send({ error: 404, message: 'No loan found in that category' });
     }
-  }
-  else{
+    const data = loansResult.rows;
+    res.status(200).send({
+      status: '200',
+      data,
+    });
+  } else {
     next();
   }
 }
@@ -45,9 +43,9 @@ export function loansInputValidator(req, res, next) {
   // input validation
 
   if (result.error) {
-    const errMsg = result.error.details[0].message
-    if (errMsg.match('pattern')){
-      return res.status(400).send({ error:404,message: 'Ooops try to insert in a valid character' })
+    const errMsg = result.error.details[0].message;
+    if (errMsg.match('pattern')) {
+      return res.status(400).send({ error: 404, message: 'Ooops try to insert in a valid character' });
     }
     return res.status(400).send({ message: `${errMsg}` });
   }

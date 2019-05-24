@@ -1,12 +1,14 @@
 import { User } from '../models/users';
 import jwtDecode from 'jwt-decode';
 
-export function adminCheck(req, res, next) {
+export async function adminCheck(req, res, next) {
   // check if user is admin
   const token = req.headers.authorization;
   const decoded = jwtDecode(token);
-  const admin = User.getUserByEmail(decoded.email);
-  if (admin || admin.isAdmin === false) {
+  const adminUser = await User.getUserByEmail(decoded.email);
+  const user = adminUser.rows[0];
+  // console.log(user.isadmin)
+  if (!user.isadmin || user.isadmin === false) {
     return res.status(403).send({ error: 403, message: 'Forbidden Only Admin has access' });
   }
   next();
@@ -23,9 +25,9 @@ export function userVerify(req, res) {
   res.send(user);
 }
 
-export function getUserFromToken(req, res){
+export function getUserFromToken(req, res) {
   const token = req.headers.authorization;
   const decoded = jwtDecode(token);
-  return decoded.email
+  return decoded.email;
 }
 

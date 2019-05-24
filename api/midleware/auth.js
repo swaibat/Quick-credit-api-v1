@@ -1,8 +1,8 @@
 import Joi from '@hapi/joi';
 import { users, User } from '../models/users';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 // validate token
@@ -39,14 +39,14 @@ export function inputValidator(req, res, next) {
     address: Joi.string().min(3).regex(/^[a-zA-Z0-9]+$/).required(),
     password: Joi.string().min(3).regex(/^[a-zA-Z0-9]{3,30}$/).required(),
     email: Joi.string().email({ minDomainSegments: 2 }).required(),
-});
+  });
   const result = Joi.validate(req.body, schema);
   // input validation
 
   if (result.error) {
-    const errMsg = result.error.details[0].message
-    if (errMsg.match('pattern')){
-      return res.status(400).send({ error:404,message: 'Ooops try to insert in a valid character' })
+    const errMsg = result.error.details[0].message;
+    if (errMsg.match('pattern')) {
+      return res.status(400).send({ error: 404, message: 'Ooops try to insert in a valid character' });
     }
     return res.status(400).send({ message: `${errMsg}` });
   }
@@ -54,10 +54,10 @@ export function inputValidator(req, res, next) {
   next();
 }
 
-export const  checkUserExists = async (req, res, next) =>{
+export const checkUserExists = async (req, res, next) => {
   const user = await User.getUserByEmail(req.body.email);
   if (user && user.rows[0]) {
-    return res.status(409).send({ message: 'user already exists' }); 
+    return res.status(409).send({ message: 'user already exists' });
   }
   next();
 };

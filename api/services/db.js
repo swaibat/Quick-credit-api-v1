@@ -1,10 +1,10 @@
 import pg from 'pg';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 const config = {
-  user: process.env.USER, //this is the db user credential
+  user: process.env.USER, // this is the db user credential
   database: process.env.DATABASE,
   password: process.env.PASSWORD,
   port: process.env.DATABASE_PORT,
@@ -18,7 +18,6 @@ pool.on('connect', () => {
 });
 
 const createTables = () => {
-
   const users = `CREATE TABLE IF NOT EXISTS
       users (
         id SERIAL PRIMARY KEY,
@@ -30,15 +29,35 @@ const createTables = () => {
         password VARCHAR(255) NOT NULL,
         isAdmin BOOLEAN DEFAULT false NOT NULL
        )`;
-    pool.query(users)
-      .then((res) => {
-        console.log(res)
-        pool.end();
-      })
-      .catch((err) =>{
-      } )
-      
-    const loans = `CREATE TABLE IF NOT EXISTS
+  pool.query(users)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+    });
+    
+    const repayments = `CREATE TABLE IF NOT EXISTS
+      repayments(
+        id SERIAL PRIMARY KEY,
+        createdOn timestamp without time zone DEFAULT now() NOT NULL,
+        loanId INT NOT NULL,
+        amount FLOAT NOT NULL,
+        monthlyInstallment INT NOT NULL,
+        balance FLOAT NOT NULL,
+        paidAmount FLOAT NOT NULL
+      )`;
+  pool.query(repayments)
+    .then((res) => {
+      console.log(res, 'repayments')
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err, 'error')
+      pool.end();
+    });
+
+  const loans = `CREATE TABLE IF NOT EXISTS
         loans(
           id SERIAL PRIMARY KEY,
           createdOn timestamp without time zone DEFAULT now() NOT NULL,
@@ -48,27 +67,25 @@ const createTables = () => {
           paymentInstallment INT NOT NULL,
           balance FLOAT NOT NULL,
           interest FLOAT NOT NULL,
-          userEmail VARCHAR (50)  NOT NULL,
-          status VARCHAR (50)  NOT NULL
+          userEmail VARCHAR (50)  NOT NULL
         )`;
-    pool.query(loans)
-      .then((res) => {
-        pool.end();
-      })
-      .catch((err) => {
-        pool.end();
-      });
+  pool.query(loans)
+    .then((res) => {
+      console.log(res, 'loans');
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err, 'error');
+      pool.end();
+    });
+};
 
-      
-  }
-
-  pool.on('remove', () => {
-    process.exit(0);
-  });
-  
+pool.on('remove', () => {
+  process.exit(0);
+});
 
 
-//export pool and createTables to be accessible  from an where within the application
+// export pool and createTables to be accessible  from an where within the application
 export {
   createTables,
   pool,

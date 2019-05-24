@@ -5,9 +5,7 @@
   "main": "index.js",
   "nyc": {
     "exclude":[
-      "**/**/**/db.js",
-      "**/**/controllers/",
-      "**/**/models/"
+      "**/**/**/db.js"
     ],
     "require": [
       "reify"

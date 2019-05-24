@@ -21,16 +21,9 @@ router.get('/', ensureToken, adminCheck, query, loan.viewLoans);
 // ADMIN view specific loans application
 router.get('/:loanId', ensureToken, adminCheck, loan.viewSpecific);
 
-// ADMIN  query not repaid loans applications
-router.get('/api/v1/loans?status=approved&repaid=false', loan.getLoansByStatus);
-
-// ADMIN  query  repaid loans applications
-router.get('/api/v1/loans?status=approved&repaid=true', loan.getLoansByStatus);
 
 // ADMIN  approve loan
-router.patch('/:loanId/approve', ensureToken, adminCheck, loan.approveLoan);
+router.patch('/:loanId', ensureToken, adminCheck, loan.approveOrRejectLoan);
 
-// ADMIN  reject loan
-router.patch('/:loanId/reject', ensureToken, adminCheck, loan.rejectLoan);
 
 export default router;

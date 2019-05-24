@@ -17,7 +17,7 @@ router.post('/auth/signup', inputValidator, checkUserExists, user.signUp);
 router.post('/auth/signin', user.signin);
 
 // Mark a user as verified
-// router.patch('/:email/verify', adminCheck, userVerify);
+router.patch('/:email/verify', adminCheck, user.verifyUser);
 
 
 export default router;

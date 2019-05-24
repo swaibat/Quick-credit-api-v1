@@ -20,14 +20,14 @@ export async function query(req, res, next) {
 
   if (status && repaid) {
     const loansResult = await loanObj.getLoanStatus(status, repaid);
-    if (loansResult.rows) {
+    if (!loansResult.rows || loansResult.rows.length < 1) {
+      return res.status().send({error:404,message:'No loan found in that category'})
+    }else{
       const data = loansResult.rows;
       res.status(200).send({
         status: '200',
         data,
       });
-    }else{
-      next();
     }
   }
   else{

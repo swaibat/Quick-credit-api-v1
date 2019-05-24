@@ -57,7 +57,7 @@ export function inputValidator(req, res, next) {
 export const  checkUserExists = async (req, res, next) =>{
   const user = await User.getUserByEmail(req.body.email);
   if (user && user.rows[0]) {
-    return res.status(409).send({ message: `user ${user.rows[0].email} already exists ` });``  
+    return res.status(409).send({ message: 'user already exists' }); 
   }
   next();
 };

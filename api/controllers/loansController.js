@@ -36,8 +36,7 @@ export class LoanController {
   LoanRepayments(req, res) {
     const loanHistory = repayments.filter(a => a.id === req.params.loanId);
     if (!loanHistory || loanHistory.length < 1) {
-      res.status(404).send({ message: "No loan repayment history found" });
-      return;
+      return res.status(404).send({ message: "No loan repayment history found" }); 
     }
     loanHistory.forEach(loan => {
       loan.createdOn = timeago.format(loan.createdOn);
@@ -47,56 +46,47 @@ export class LoanController {
 
   // View loan repayment history
   async viewLoans(req, res) {
-  //wait for the promise to resolve
-  let loans;
-  try{
-    loans = await loan.getAllLoans()
-    res.status(200).send({
-      status:"200",
-      loans:loans.rows
-    });
-  }catch(error){
-    res.status(500).send({error})
-  }
-
+    //wait for the promise to resolve
+    let loans;
+    try {
+      loans = await loan.getAllLoans();
+      res.status(200).send({
+        status: "200",
+        loans: loans.rows
+      });
+    } catch (error) {
+      res.status(500).send({ error });
+    }
   }
 
   // View a specific loan
   async viewSpecific(req, res) {
-    try{
-      const singleLoan = await loan.getSingleLoan(req.params.loanId)
-      res.status(200).send({loan: singleLoan.rows[0]});
-    }
-    catch(error){
-      res.status(500).send({error})
+    try {
+      const singleLoan = await loan.getSingleLoan(req.params.loanId);
+      res.status(200).send({ loan: singleLoan.rows[0] });
+    } catch (error) {
+      res.status(500).send({ error });
     }
   }
 
-  //get loans filter by query params
-  async getLoansByStatus(req, res){
-console.log(req.query, 'Query')
- const {status, repaid} = req.query
- 
- const loansResult = await getLoanStatus(status, repaid)
- if (loansResult.rows){
-     const data = loansResult.rows
-     res.status(200).send({
-         status: "200",
-         data
-     })
- }
-  }
   // approve a loan application
-  approveLoan(req, res) {
-    const loan = loans.find(a => a.id === req.params.loanId);
-    loan.status = "approved";
-    res.status(200).send(loan);
-  }
+  async approveOrRejectLoan(req, res) {
+    const { loanId } = req.params;
+    const { status } = req.body;
 
-  // reject a loan application
-  rejectLoan(req, res) {
-    const loan = loans.find(a => a.id === req.params.loanId);
-    loan.status = "rejected";
-    res.status(200).send(loan);
+    if (status === "approved" || status === "rejected") {
+      
+      const loanStatus = await loan.updateLoanStatus(status, loanId);
+      const data = loanStatus.rows;
+      console.log(data);
+      res.status(200).send({
+        status: "200",
+        data:{
+            status
+        }
+      });
+    }else{
+        res.status(400).send({message: "status can only be approved or rejected"})
+    }
   }
 }
